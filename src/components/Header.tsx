@@ -35,15 +35,19 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-2 flex-wrap">
             {categories.map((category) => (
-              <Link
+              <Button
                 key={category}
-                to={`/category/${category.toLowerCase().replace(" ", "-")}`}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                variant="outline"
+                size="sm"
+                asChild
+                className="hover:bg-primary hover:text-primary-foreground"
               >
-                {category}
-              </Link>
+                <Link to={`/category/${category.toLowerCase().replace(" ", "-")}`}>
+                  {category}
+                </Link>
+              </Button>
             ))}
           </nav>
 
