@@ -1,193 +1,101 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { makes, types, conditions, priceRanges, districts } from "@/data/mockData";
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 const FilterSidebar = () => {
-  const [expandedSections, setExpandedSections] = useState({
-    make: true,
-    type: true,
-    condition: true,
-    price: true,
-    location: false,
-  });
-
-  const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
-  };
-
   return (
-    <div className="bg-card rounded-lg border border-border shadow-sm p-4">
+    <div className="bg-card rounded-lg border border-border shadow-sm p-4 space-y-4">
       <h3 className="font-semibold text-lg mb-4">Filters</h3>
 
       {/* Make */}
-      <div className="mb-4">
-        <button
-          onClick={() => toggleSection("make")}
-          className="flex items-center justify-between w-full mb-2 font-medium text-sm"
-        >
-          Make
-          {expandedSections.make ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
-        {expandedSections.make && (
-          <ScrollArea className="h-48">
-            <div className="space-y-2">
-              {makes.map((make) => (
-                <div key={make} className="flex items-center space-x-2">
-                  <Checkbox id={`make-${make}`} />
-                  <Label
-                    htmlFor={`make-${make}`}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {make}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-        )}
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">Make</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Select make" />
+          </SelectTrigger>
+          <SelectContent>
+            {makes.map((make) => (
+              <SelectItem key={make} value={make}>
+                {make}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-
-      <Separator className="my-4" />
 
       {/* Type */}
-      <div className="mb-4">
-        <button
-          onClick={() => toggleSection("type")}
-          className="flex items-center justify-between w-full mb-2 font-medium text-sm"
-        >
-          Type
-          {expandedSections.type ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
-        {expandedSections.type && (
-          <div className="space-y-2">
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">Type</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Select type" />
+          </SelectTrigger>
+          <SelectContent>
             {types.map((type) => (
-              <div key={type} className="flex items-center space-x-2">
-                <Checkbox id={`type-${type}`} />
-                <Label
-                  htmlFor={`type-${type}`}
-                  className="text-sm font-normal cursor-pointer"
-                >
-                  {type}
-                </Label>
-              </div>
+              <SelectItem key={type} value={type}>
+                {type}
+              </SelectItem>
             ))}
-          </div>
-        )}
+          </SelectContent>
+        </Select>
       </div>
-
-      <Separator className="my-4" />
 
       {/* Condition */}
-      <div className="mb-4">
-        <button
-          onClick={() => toggleSection("condition")}
-          className="flex items-center justify-between w-full mb-2 font-medium text-sm"
-        >
-          Condition
-          {expandedSections.condition ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
-        {expandedSections.condition && (
-          <div className="space-y-2">
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">Condition</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Select condition" />
+          </SelectTrigger>
+          <SelectContent>
             {conditions.map((condition) => (
-              <div key={condition} className="flex items-center space-x-2">
-                <Checkbox id={`condition-${condition}`} />
-                <Label
-                  htmlFor={`condition-${condition}`}
-                  className="text-sm font-normal cursor-pointer"
-                >
-                  {condition}
-                </Label>
-              </div>
+              <SelectItem key={condition} value={condition}>
+                {condition}
+              </SelectItem>
             ))}
-          </div>
-        )}
+          </SelectContent>
+        </Select>
       </div>
-
-      <Separator className="my-4" />
 
       {/* Price Range */}
-      <div className="mb-4">
-        <button
-          onClick={() => toggleSection("price")}
-          className="flex items-center justify-between w-full mb-2 font-medium text-sm"
-        >
-          Price Range
-          {expandedSections.price ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
-        {expandedSections.price && (
-          <ScrollArea className="h-48">
-            <div className="space-y-2">
-              {priceRanges.map((range) => (
-                <div key={range.label} className="flex items-center space-x-2">
-                  <Checkbox id={`price-${range.label}`} />
-                  <Label
-                    htmlFor={`price-${range.label}`}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {range.label}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-        )}
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">Price Range</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Select price range" />
+          </SelectTrigger>
+          <SelectContent>
+            {priceRanges.map((range) => (
+              <SelectItem key={range.label} value={range.label}>
+                {range.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
-      <Separator className="my-4" />
-
-      {/* Location */}
-      <div className="mb-4">
-        <button
-          onClick={() => toggleSection("location")}
-          className="flex items-center justify-between w-full mb-2 font-medium text-sm"
-        >
-          District
-          {expandedSections.location ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
-        {expandedSections.location && (
-          <ScrollArea className="h-48">
-            <div className="space-y-2">
-              {districts.map((district) => (
-                <div key={district.name} className="flex items-center space-x-2">
-                  <Checkbox id={`district-${district.name}`} />
-                  <Label
-                    htmlFor={`district-${district.name}`}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {district.name}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </ScrollArea>
-        )}
+      {/* District */}
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">District</Label>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Select district" />
+          </SelectTrigger>
+          <SelectContent>
+            {districts.map((district) => (
+              <SelectItem key={district.name} value={district.name}>
+                {district.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );
