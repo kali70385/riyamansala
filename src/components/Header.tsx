@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
-import { Car, Menu, User, PlusCircle } from "lucide-react";
+import { Car, User, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/mockData";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const Header = () => {
   return (
@@ -29,51 +24,40 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-primary">
-            <Car className="w-8 h-8" />
-            <span>AutoMarket</span>
+          <Link to="/" className="flex items-center gap-2 text-xl lg:text-2xl font-bold text-primary shrink-0">
+            <Car className="w-6 h-6 lg:w-8 lg:h-8" />
+            <span className="hidden sm:inline">AutoMarket</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2 flex-wrap">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant="outline"
-                size="sm"
-                asChild
-                className="hover:bg-primary hover:text-primary-foreground"
-              >
-                <Link to={`/category/${category.toLowerCase().replace(" ", "-")}`}>
-                  {category}
-                </Link>
-              </Button>
-            ))}
-          </nav>
-
-          {/* Mobile Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild className="lg:hidden">
-              <Button variant="outline" size="icon">
-                <Menu className="w-5 h-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 bg-popover">
-              {categories.map((category) => (
-                <DropdownMenuItem key={category} asChild>
-                  <Link to={`/category/${category.toLowerCase().replace(" ", "-")}`}>
-                    {category}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* Post Ad Button */}
-          <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
+          {/* Post Ad Button - Desktop */}
+          <Button className="hidden lg:flex bg-accent hover:bg-accent/90 text-accent-foreground shrink-0">
             <PlusCircle className="w-4 h-4 mr-2" />
             Post Ad
           </Button>
+        </div>
+      </div>
+
+      {/* Categories Navigation - Responsive */}
+      <div className="border-t border-border">
+        <div className="container mx-auto px-4 py-3">
+          <ScrollArea className="w-full">
+            <div className="flex gap-2 pb-2">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="hover:bg-primary hover:text-primary-foreground whitespace-nowrap shrink-0"
+                >
+                  <Link to={`/category/${category.toLowerCase().replace(" ", "-")}`}>
+                    {category}
+                  </Link>
+                </Button>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" className="h-2" />
+          </ScrollArea>
         </div>
       </div>
     </header>
