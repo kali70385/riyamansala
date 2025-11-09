@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import FilterSidebar from "@/components/FilterSidebar";
 import VehicleCard from "@/components/VehicleCard";
 import { mockVehicles } from "@/data/mockData";
@@ -27,7 +28,7 @@ const CategoryPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
 
       {/* Category Header */}
@@ -80,6 +81,8 @@ const CategoryPage = () => {
           </main>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
