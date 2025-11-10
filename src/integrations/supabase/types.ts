@@ -14,7 +14,131 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      listing_images: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          listing_id: string
+          position: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          listing_id: string
+          position?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          listing_id?: string
+          position?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listing_images_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      listings: {
+        Row: {
+          category: string
+          condition: string
+          contact_email: string | null
+          contact_phone: string
+          created_at: string
+          description: string
+          fuel_type: string
+          id: string
+          location: string
+          make: string
+          mileage: number
+          model: string
+          price: number
+          status: string
+          title: string
+          transmission: string
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          category: string
+          condition: string
+          contact_email?: string | null
+          contact_phone: string
+          created_at?: string
+          description: string
+          fuel_type: string
+          id?: string
+          location: string
+          make: string
+          mileage: number
+          model: string
+          price: number
+          status?: string
+          title: string
+          transmission: string
+          updated_at?: string
+          user_id: string
+          year: number
+        }
+        Update: {
+          category?: string
+          condition?: string
+          contact_email?: string | null
+          contact_phone?: string
+          created_at?: string
+          description?: string
+          fuel_type?: string
+          id?: string
+          location?: string
+          make?: string
+          mileage?: number
+          model?: string
+          price?: number
+          status?: string
+          title?: string
+          transmission?: string
+          updated_at?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          phone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          full_name: string
+          id?: string
+          phone: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
