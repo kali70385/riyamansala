@@ -4,8 +4,24 @@ import { Button } from "@/components/ui/button";
 import { categories } from "@/data/mockData";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import riyamansalaLogo from "@/assets/riyamansala-logo.png";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Header = () => {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <header className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
       {/* Top Bar */}
@@ -13,10 +29,21 @@ const Header = () => {
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <span>Riyamansala - Sri Lanka's Trusted Vehicle Marketplace</span>
           <div className="flex gap-4">
-            <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
-              <User className="w-4 h-4 mr-2" />
-              Login
-            </Button>
+            {user ? (
+              <Button asChild variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
+                <Link to="/profile">
+                  <User className="w-4 h-4 mr-2" />
+                  Profile
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
+                <Link to="/auth">
+                  <User className="w-4 h-4 mr-2" />
+                  Login
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -25,8 +52,9 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0">
-            <img src={riyamansalaLogo} alt="Riyamansala Logo" className="h-10 lg:h-12" />
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <img src={riyamansalaLogo} alt="Riyamansala Logo" className="h-12 md:h-16 lg:h-20 w-auto" />
+            <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">Riyamansala</span>
           </Link>
 
           {/* Post Ad Button - Desktop */}
