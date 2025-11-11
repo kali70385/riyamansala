@@ -52,9 +52,8 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 shrink-0">
-            <img src={riyamansalaLogo} alt="Riyamansala Logo" className="h-12 md:h-16 lg:h-20 w-auto" />
-            <span className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary">Riyamansala</span>
+          <Link to="/" className="flex items-center shrink-0">
+            <img src={riyamansalaLogo} alt="Riyamansala Logo" className="h-16 md:h-24 lg:h-32 w-auto" />
           </Link>
 
           {/* Post Ad Button - Desktop */}
