@@ -76,55 +76,59 @@ const FilterSidebar = () => {
       {/* Model - FIRST FILTER */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">Model</Label>
-        <Popover open={openModelCombobox} onOpenChange={setOpenModelCombobox}>
-          <PopoverTrigger asChild>
-            <div className="relative">
-              <Input
-                value={selectedModel}
-                onChange={(e) => {
-                  setSelectedModel(e.target.value);
-                  setOpenModelCombobox(true);
-                }}
-                onFocus={() => setOpenModelCombobox(true)}
-                placeholder="Type to search model..."
-                className="w-full"
-              />
+        <div className="relative">
+          <Input
+            value={selectedModel}
+            onChange={(e) => {
+              setSelectedModel(e.target.value);
+              // Only show suggestions if 4+ characters typed
+              if (e.target.value.length >= 4) {
+                setOpenModelCombobox(true);
+              } else {
+                setOpenModelCombobox(false);
+              }
+            }}
+            placeholder="Type model name (min 4 letters for suggestions)..."
+            className="w-full"
+          />
+          {openModelCombobox && selectedModel.length >= 4 && availableModels.filter((model) => 
+            model.toLowerCase().includes(selectedModel.toLowerCase())
+          ).length > 0 && (
+            <div className="absolute top-full left-0 right-0 z-50 mt-1">
+              <PopoverContent className="w-full p-0" align="start" onOpenAutoFocus={(e) => e.preventDefault()}>
+                <Command>
+                  <CommandList>
+                    <CommandGroup>
+                      {availableModels
+                        .filter((model) => 
+                          model.toLowerCase().includes(selectedModel.toLowerCase())
+                        )
+                        .slice(0, 50)
+                        .map((model) => (
+                          <CommandItem
+                            key={model}
+                            value={model}
+                            onSelect={(value) => {
+                              setSelectedModel(value);
+                              setOpenModelCombobox(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                selectedModel === model ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {model}
+                          </CommandItem>
+                        ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
             </div>
-          </PopoverTrigger>
-          <PopoverContent className="w-full p-0" align="start">
-            <Command>
-              <CommandInput placeholder="Search model..." value={selectedModel} onValueChange={setSelectedModel} />
-              <CommandList>
-                <CommandEmpty>No model found.</CommandEmpty>
-                <CommandGroup>
-                  {availableModels
-                    .filter((model) => 
-                      model.toLowerCase().includes(selectedModel.toLowerCase())
-                    )
-                    .slice(0, 50)
-                    .map((model) => (
-                      <CommandItem
-                        key={model}
-                        value={model}
-                        onSelect={(value) => {
-                          setSelectedModel(value);
-                          setOpenModelCombobox(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            selectedModel === model ? "opacity-100" : "opacity-0"
-                          )}
-                        />
-                        {model}
-                      </CommandItem>
-                    ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+          )}
+        </div>
       </div>
 
       {/* Make */}
