@@ -1,0 +1,277 @@
+[Cars]
+Maker: Toyota
+Models: Corolla (AE80, AE90, AE100, AE110, NZE121, NZE141, NZE161), Axio, Vitz, Premio, Aqua, Prius, Allion, Belta, Yaris, Crown, Camry, Starlet, Corona, Carina, Tercel, Platz, Soluna, Cynos, Paseo, Sera
+Maker: Suzuki
+Models: Alto, Wagon R, Swift, Baleno, Celerio, Cultus, Maruti 800, Dzire, Ciaz, Ignis, S-Presso, Zen, Esteem
+Maker: Honda
+Models: Civic (EG, EK, ES, FD, FB, FC), City, Fit, Grace, Insight, Accord, Vezel, Shuttle, Amaze, Brio
+Maker: Nissan
+Models: March, Tiida, Sunny (B11, B12, B13, B14, FB15, N16, N17), Bluebird, Leaf, Skyline, Teana, Cefiro, Pulsar, Presea
+Maker: Mitsubishi
+Models: Lancer (Box, CK, CS, CY), Galant, Mirage, Colt
+Maker: Tata
+Models: Nano, Indica, Indigo, Tiago, Tigor, Zest
+Maker: Micro
+Models: Panda, Panda Cross, Geely MK, MX7
+Maker: Daihatsu
+Models: Charade, Cuore, Mira, Sirion, Esse, Trevis, Storia, Domino
+Maker: Hyundai
+Models: Elantra, Accent, Sonata, i10, i20, Grand i10, Eon, Atos, Getz
+Maker: Mercedes-Benz
+Models: C-Class (W202, W203, W204, W205), E-Class (W124, W210, W211, W212, W213), S-Class (W126, W140, W220, W221, W222), A-Class, B-Class, CLA
+Maker: Kia
+Models: Picanto, Rio, Cerato, Forte, Spectra, Sephia, Pride
+Maker: Ford
+Models: Focus, Fiesta, Laser, Escort, Telstar
+Maker: Perodua
+Models: Viva, Axia, Bezza, Kelisa, Kancil
+Maker: Renault
+Models: Kwid, Fluence, Clio, Megane, Symbol
+Maker: Peugeot
+Models: 206, 306, 406, 508, 405, 205, 309
+Maker: BMW
+Models: 3 Series (E30, E36, E46, E90, F30), 5 Series (E34, E39, E60, F10), 7 Series (E32, E38, E65, F01), 1 Series
+Maker: Audi
+Models: A3, A4, A6, A8, A1, 80, 100
+Maker: Morris
+Models: Minor, Marina, Oxford
+Maker: Austin
+Models: Cambridge, Mini, Allegro
+Maker: Proton
+Models: Saga, Wira, Preve, Iriz
+Maker: Volkswagen
+Models: Beetle, Golf, Jetta, Polo, Passat, Vento
+Maker: Volvo
+Models: S40, S60, S80, 240, 740, 940
+Maker: Zotye
+Models: Z100, Z300
+Maker: MG
+Models: 3, 5, 6, ZS
+Maker: Chery
+Models: QQ
+Maker: FAW
+Models: V2
+
+[SUVs]
+Maker: Toyota
+Models: Land Cruiser, Prado, RAV4, Rush, Fortuner, C-HR, Harrier, Kluger
+Maker: Mitsubishi
+Models: Pajero, Montero, Outlander, ASX, Shogun, iO
+Maker: Honda
+Models: CR-V, HR-V, Vezel, BR-V
+Maker: Nissan
+Models: X-Trail, Patrol, Murano, Terrano, Pathfinder, Juke
+Maker: Suzuki
+Models: Vitara, Jimny, Grand Vitara, S-Cross
+Maker: Mahindra
+Models: KUV100, XUV300, XUV500, Scorpio, Bolero
+Maker: Isuzu
+Models: MU-X, Trooper, Bighorn
+Maker: Hyundai
+Models: Tucson, Santa Fe, Creta, Kona
+Maker: Kia
+Models: Sportage, Sorento, Stonic, Niro
+Maker: Ford
+Models: Ecosport, Everest, Escape, Explorer
+Maker: Mercedes-Benz
+Models: G-Class, GLE, GLC, ML, GLK
+Maker: BMW
+Models: X1, X3, X5, X6, X2
+Maker: Audi
+Models: Q3, Q5, Q7, Q2
+Maker: Range-Rover
+Models: Evoque, Sport, Vogue, Velar, Discovery
+Maker: Jeep
+Models: Wrangler, Cherokee, Grand Cherokee, Compass, Renegade
+Maker: Subaru
+Models: Forester, XV, Outback
+Maker: Mazda
+Models: CX-3, CX-5, CX-9, CX-30
+Maker: Haval
+Models: H2, H6, Jolion
+Maker: MG
+Models: ZS, HS, GS
+Maker: DFSK
+Models: Glory 580, Glory i-Auto
+Maker: Peugeot
+Models: 3008, 5008
+Maker: Volkswagen
+Models: Tiguan, Touareg
+Maker: Porsche
+Models: Cayenne, Macan
+
+[Vans]
+Maker: Toyota
+Models: Hiace (KDH, LH), Townace, Liteace, Dolphin, Regius, Granvia, Noah, Voxy, Esquire
+Maker: Nissan
+Models: Caravan, Vanette, Serena, Elgrand
+Maker: Suzuki
+Models: Every, Carry, Bolan
+Maker: Mitsubishi
+Models: Delica, L300, L400
+Maker: Daihatsu
+Models: Hijet, Gran Max
+Maker: Mazda
+Models: Bongo, Bongo Brawny
+Maker: Isuzu
+Models: Fargo, Como
+Maker: Ford
+Models: Transit, Tourneo
+Maker: Mercedes-Benz
+Models: Vito, V-Class, Sprinter
+Maker: Joylong
+Models: Hiace, A-series
+Maker: Foton
+Models: View, Toano
+Maker: Hyundai
+Models: H-1, Starex, Grace
+Maker: Kia
+Models: Pregio, Carnival, K2700
+Maker: FAW
+Models: Carrier
+
+[Motorbikes]
+Maker: Bajaj
+Models: Pulsar (135, 150, 160, 180, 200, 220), Discover (100, 125, 135, 150), Platina, CT 100, Dominar 400, Avenger
+Maker: TVS
+Models: Apache (RTR 150, 160, 180, 200), Metro, Ntorq, XL 100, Scooty Pep, Jupiter, Wego, Star City, Phoenix
+Maker: Honda
+Models: Dio, Activa, Grazia, Hornet, Unicorn, CD 90, CB Twister, Navi, Shine, Livo, X-Blade, CBR (150, 250), CRF
+Maker: Hero
+Models: Splendor, Passion, Glamour, Maestro, Pleasure, HF Deluxe, Xtreme, Hunk, Karizma, Destini, Duet
+Maker: Yamaha
+Models: FZ (V1, V2, V3), R15 (V1, V2, V3), MT-15, Ray, Fascino, Saluto, SZ-R, Enticer, Libero, Crux
+Maker: Suzuki
+Models: Gixxer, Access, Burgman Street, Intruder, Hayate, Zeus, Slingshot
+Maker: Demak
+Models: D-Force, D-Tour, Evo
+Maker: KTM
+Models: Duke (125, 200, 250, 390), RC (125, 200, 390)
+Maker: Royal Enfield
+Models: Classic 350, Bullet 350, Himalayan, Interceptor 650, Continental GT 650, Thunderbird
+Maker: Kawasaki
+Models: Ninja (250, 300, 400, 650), Z series (Z250, Z300, Z650, Z800, Z900), KLX
+Maker: Harley-Davidson
+Models: Street 750, Iron 883, Forty-Eight
+Maker: Ducati
+Models: Diavel, Monster, Scrambler, Panigale
+Maker: BMW Motorrad
+Models: G310R, G310GS, S1000RR
+Maker: Singer
+Models: City-Rider, Turbo
+Maker: Aprilia
+Models: SR 150, RS series
+Maker: Vespa
+Models: LX, VXL, SXL
+
+[Lorries]
+Maker: Isuzu
+Models: Elf (NKR, NPR, NQR), Forward (FTR, FVR, FSR)
+Maker: Mitsubishi
+Models: Fuso, Canter (FB, FE, FG)
+Maker: Tata
+Models: Ace, Super Ace, LPK, LPT, SFC, Ultra, Signa
+Maker: Ashok-Leyland
+Models: Dost, Comet, Ecomet, Captain
+Maker: Mahindra
+Models: Bolero Maxi Truck, Maxximo, Furio, Blazo
+Maker: Eicher
+Models: Pro series (1000, 2000, 3000, 6000)
+Maker: JAC
+Models: N-Series, Gallop
+Maker: Foton
+Models: Aumark, Auman
+Maker: Mazda
+Models: Titan, T-Series
+Maker: Toyota
+Models: Dyna, Toyoace
+Maker: Nissan
+Models: Atlas, Cabstar
+Maker: Hino
+Models: Dutro, Ranger, Profia
+
+[Three-wheel]
+Maker: Bajaj
+Models: RE, Maxima, Compact
+Maker: TVS
+Models: King, King Duramax
+Maker: Piaggio
+Models: Ape, Ape City, Ape Xtra
+Maker: Mahindra
+Models: Alfa, Treo
+Maker: Atul
+Models: Shakti, Gem
+Maker: Greaves
+Models: Garuda
+
+[Pickups]
+Maker: Toyota
+Models: Hilux, Stout, LN series
+Maker: Mitsubishi
+Models: L200, Triton, Strada
+Maker: Nissan
+Models: Navara, Frontier, D21, D22
+Maker: Isuzu
+Models: D-Max, KB, TFR
+Maker: Ford
+Models: Ranger, Courier
+Maker: Mazda
+Models: BT-50, B-Series, Proceed
+Maker: Tata
+Models: Xenon, 207 DI
+Maker: Mahindra
+Models: Scorpio Getaway, Bolero Pik-Up
+Maker: GWM
+Models: Wingle, Steed
+Maker: Foton
+Models: Tunland
+Maker: SsangYong
+Models: Actyon Sports
+
+[Heavy-duty vehicles]
+Maker: Lanka Ashok Leyland
+Models: Trucks, Buses (Viking, Cheetah)
+Maker: Tata
+Models: Prima, Signa, Buses (Marcopolo, Starbus), Novus
+Maker: Isuzu
+Models: Giga, Journey Bus
+Maker: Mitsubishi Fuso
+Models: Fighter, Super Great, Rosa Bus
+Maker: UD Nissan Diesel
+Models: Quester, Croner, Big Thumb
+Maker: Volvo
+Models: FH, FM, FMX, B7R Bus, B9R Bus
+Maker: Scania
+Models: P-series, G-series, R-series, Touring Bus, Marcopolo Bus
+Maker: MAN
+Models: TGS, TGM, TGA, Lion's Coach Bus
+Maker: DAF
+Models: XF, CF, LF
+Maker: JCB
+Models: Backhoe loaders (3CX, 4DX), Excavators, Telehandlers, Rollers
+Maker: CAT
+Models: Excavators, Bulldozers, Graders, Wheel Loaders, Backhoe Loaders
+Maker: Komatsu
+Models: Excavators, Dozers, Wheel Loaders, Motor Graders
+Maker: Hitachi
+Models: Excavators, Wheel Loaders
+Maker: Kobelco
+Models: Excavators
+Maker: Sany
+Models: Excavators, Cranes, Concrete Machinery
+Maker: Zoomlion
+Models: Cranes, Excavators
+
+[Spare parts]
+Maker: Japanese Brands
+Models: Toyota, Nissan, Honda, Mitsubishi, Suzuki, Mazda, Isuzu, Daihatsu, Subaru, Yamaha
+Maker: Indian Brands
+Models: Tata, Bajaj, TVS, Hero, Mahindra, Ashok Leyland, Eicher
+Maker: Korean Brands
+Models: Hyundai, Kia
+Maker: European Brands
+Models: Mercedes-Benz, BMW, Audi, Volkswagen, Peugeot, Renault, Volvo, Land Rover, Fiat
+Maker: American Brands
+Models: Ford, Chevrolet, Jeep
+Maker: Chinese Brands
+Models: DFSK, Micro, Geely, Chery, Zotye, Foton, JAC

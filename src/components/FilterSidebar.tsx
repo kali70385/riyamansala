@@ -7,21 +7,68 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { makes, types, conditions, priceRanges, districts, transmissions, fuelTypes } from "@/data/mockData";
-import { useState } from "react";
+import { makes, types, conditions, priceRanges, districts, transmissions, fuelTypes, vehicleModels, categories } from "@/data/mockData";
+import { useState, useMemo } from "react";
 
 const FilterSidebar = () => {
   const [yearMin, setYearMin] = useState([1979]);
   const [yearMax, setYearMax] = useState([2025]);
+  const [selectedType, setSelectedType] = useState<string>("");
+  const [selectedMake, setSelectedMake] = useState<string>("");
+  
+  // Get available models based on selected type and make
+  const availableModels = useMemo(() => {
+    if (!selectedType || !selectedMake) return [];
+    
+    // Map type to category
+    const categoryMap: Record<string, string> = {
+      "Car": "Cars",
+      "Van": "Vans",
+      "SUV/Jeep": "SUVs",
+      "Three Wheel": "Three Wheel",
+      "Pickup/Double Cab": "Pickups",
+      "Crew Cab": "Pickups",
+      "Lorry/Tipper": "Lorries",
+      "Heavy-Duty": "Heavy-Duty",
+      "Motorcycle": "Motorbikes",
+      "Bus": "Vans",
+    };
+    
+    const category = categoryMap[selectedType];
+    if (!category || !vehicleModels[category]) return [];
+    
+    return vehicleModels[category][selectedMake] || [];
+  }, [selectedType, selectedMake]);
 
   return (
     <div className="bg-card rounded-lg border border-border shadow-sm p-4 space-y-4">
       <h3 className="font-semibold text-lg mb-4">Filters</h3>
 
+      {/* Model - FIRST FILTER */}
+      <div className="space-y-2">
+        <Label className="text-sm font-medium">Model</Label>
+        <Select disabled={!selectedMake || !selectedType}>
+          <SelectTrigger>
+            <SelectValue placeholder={
+              !selectedType ? "Select type first" : 
+              !selectedMake ? "Select make first" : 
+              "Select model"
+            } />
+          </SelectTrigger>
+          <SelectContent>
+            {availableModels.map((model) => (
+              <SelectItem key={model} value={model}>
+                {model}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       {/* Make */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">Make</Label>
-        <Select>
+        <Select onValueChange={setSelectedMake}>
           <SelectTrigger>
             <SelectValue placeholder="Select make" />
           </SelectTrigger>
@@ -38,7 +85,7 @@ const FilterSidebar = () => {
       {/* Type */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">Type</Label>
-        <Select>
+        <Select onValueChange={setSelectedType}>
           <SelectTrigger>
             <SelectValue placeholder="Select type" />
           </SelectTrigger>
