@@ -7,37 +7,66 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { makes, types, conditions, priceRanges, districts, transmissions, fuelTypes, vehicleModels, categories } from "@/data/mockData";
 import { useState, useMemo } from "react";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const FilterSidebar = () => {
   const [yearMin, setYearMin] = useState([1979]);
   const [yearMax, setYearMax] = useState([2025]);
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedMake, setSelectedMake] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>("");
+  const [openModelCombobox, setOpenModelCombobox] = useState(false);
   
   // Get available models based on selected type and make
   const availableModels = useMemo(() => {
-    if (!selectedType || !selectedMake) return [];
+    // If both type and make are selected, filter by them
+    if (selectedType && selectedMake) {
+      const categoryMap: Record<string, string> = {
+        "Car": "Cars",
+        "Van": "Vans",
+        "SUV/Jeep": "SUVs",
+        "Three Wheel": "Three Wheel",
+        "Pickup/Double Cab": "Pickups",
+        "Crew Cab": "Pickups",
+        "Lorry/Tipper": "Lorries",
+        "Heavy-Duty": "Heavy-Duty",
+        "Motorcycle": "Motorbikes",
+        "Bus": "Vans",
+      };
+      
+      const category = categoryMap[selectedType];
+      if (!category || !vehicleModels[category]) return [];
+      
+      return vehicleModels[category][selectedMake] || [];
+    }
     
-    // Map type to category
-    const categoryMap: Record<string, string> = {
-      "Car": "Cars",
-      "Van": "Vans",
-      "SUV/Jeep": "SUVs",
-      "Three Wheel": "Three Wheel",
-      "Pickup/Double Cab": "Pickups",
-      "Crew Cab": "Pickups",
-      "Lorry/Tipper": "Lorries",
-      "Heavy-Duty": "Heavy-Duty",
-      "Motorcycle": "Motorbikes",
-      "Bus": "Vans",
-    };
+    // Otherwise, return all models from all categories, sorted alphabetically
+    const allModels: string[] = [];
+    Object.values(vehicleModels).forEach((category) => {
+      Object.values(category).forEach((models) => {
+        allModels.push(...models);
+      });
+    });
     
-    const category = categoryMap[selectedType];
-    if (!category || !vehicleModels[category]) return [];
-    
-    return vehicleModels[category][selectedMake] || [];
+    // Remove duplicates and sort
+    return [...new Set(allModels)].sort();
   }, [selectedType, selectedMake]);
 
   return (
@@ -47,22 +76,55 @@ const FilterSidebar = () => {
       {/* Model - FIRST FILTER */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">Model</Label>
-        <Select disabled={!selectedMake || !selectedType}>
-          <SelectTrigger>
-            <SelectValue placeholder={
-              !selectedType ? "Select type first" : 
-              !selectedMake ? "Select make first" : 
-              "Select model"
-            } />
-          </SelectTrigger>
-          <SelectContent>
-            {availableModels.map((model) => (
-              <SelectItem key={model} value={model}>
-                {model}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Popover open={openModelCombobox} onOpenChange={setOpenModelCombobox}>
+          <PopoverTrigger asChild>
+            <div className="relative">
+              <Input
+                value={selectedModel}
+                onChange={(e) => {
+                  setSelectedModel(e.target.value);
+                  setOpenModelCombobox(true);
+                }}
+                onFocus={() => setOpenModelCombobox(true)}
+                placeholder="Type to search model..."
+                className="w-full"
+              />
+            </div>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0" align="start">
+            <Command>
+              <CommandInput placeholder="Search model..." value={selectedModel} onValueChange={setSelectedModel} />
+              <CommandList>
+                <CommandEmpty>No model found.</CommandEmpty>
+                <CommandGroup>
+                  {availableModels
+                    .filter((model) => 
+                      model.toLowerCase().includes(selectedModel.toLowerCase())
+                    )
+                    .slice(0, 50)
+                    .map((model) => (
+                      <CommandItem
+                        key={model}
+                        value={model}
+                        onSelect={(value) => {
+                          setSelectedModel(value);
+                          setOpenModelCombobox(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedModel === model ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        {model}
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {/* Make */}
