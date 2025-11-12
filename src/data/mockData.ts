@@ -80,6 +80,17 @@ export const conditions = [
   "Unregistered/Recondition",
 ];
 
+export const transmissions = ["Automatic", "Manual"];
+
+export const fuelTypes = [
+  "Petrol",
+  "Diesel",
+  "Hybrid",
+  "Electric",
+  "Gas",
+  "Kick",
+];
+
 export const priceRanges = [
   { label: "Below 100k", min: 0, max: 100000 },
   { label: "100k - 500k", min: 100000, max: 500000 },
