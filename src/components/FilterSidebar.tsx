@@ -76,26 +76,32 @@ const FilterSidebar = () => {
       {/* Model - FIRST FILTER */}
       <div className="space-y-2">
         <Label className="text-sm font-medium">Model</Label>
-        <div className="relative">
-          <Input
-            value={selectedModel}
-            onChange={(e) => {
-              setSelectedModel(e.target.value);
-              // Only show suggestions if 4+ characters typed
-              if (e.target.value.length >= 4) {
-                setOpenModelCombobox(true);
-              } else {
-                setOpenModelCombobox(false);
-              }
-            }}
-            placeholder="Type model name (min 4 letters for suggestions)..."
-            className="w-full"
-          />
-          {openModelCombobox && selectedModel.length >= 4 && availableModels.filter((model) => 
-            model.toLowerCase().includes(selectedModel.toLowerCase())
-          ).length > 0 && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1">
-              <PopoverContent className="w-full p-0" align="start" onOpenAutoFocus={(e) => e.preventDefault()}>
+        <Popover open={openModelCombobox} onOpenChange={setOpenModelCombobox}>
+          <div className="relative">
+            <Input
+              value={selectedModel}
+              onChange={(e) => {
+                setSelectedModel(e.target.value);
+                // Only show suggestions if 4+ characters typed
+                if (e.target.value.length >= 4 && availableModels.filter((model) => 
+                  model.toLowerCase().includes(e.target.value.toLowerCase())
+                ).length > 0) {
+                  setOpenModelCombobox(true);
+                } else {
+                  setOpenModelCombobox(false);
+                }
+              }}
+              placeholder="Type model name (min 4 letters for suggestions)..."
+              className="w-full"
+            />
+            {openModelCombobox && selectedModel.length >= 4 && (
+              <PopoverContent 
+                className="w-[var(--radix-popover-trigger-width)] p-0" 
+                align="start" 
+                onOpenAutoFocus={(e) => e.preventDefault()}
+                side="bottom"
+                sideOffset={4}
+              >
                 <Command>
                   <CommandList>
                     <CommandGroup>
@@ -126,9 +132,9 @@ const FilterSidebar = () => {
                   </CommandList>
                 </Command>
               </PopoverContent>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        </Popover>
       </div>
 
       {/* Make */}
