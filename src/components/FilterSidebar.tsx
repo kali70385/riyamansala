@@ -96,14 +96,14 @@ const FilterSidebar = () => {
             />
             {openModelCombobox && selectedModel.length >= 4 && (
               <PopoverContent 
-                className="w-[var(--radix-popover-trigger-width)] p-0" 
+                className={cn("p-0 bg-popover border shadow-lg", "w-full max-w-[400px]")}
                 align="start" 
                 onOpenAutoFocus={(e) => e.preventDefault()}
                 side="bottom"
                 sideOffset={4}
               >
-                <Command>
-                  <CommandList>
+                <Command className="bg-popover">
+                  <CommandList className="max-h-[300px]">
                     <CommandGroup>
                       {availableModels
                         .filter((model) => 
