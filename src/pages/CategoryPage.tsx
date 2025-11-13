@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FilterSidebar from "@/components/FilterSidebar";
@@ -10,6 +11,14 @@ import { ArrowLeft } from "lucide-react";
 const CategoryPage = () => {
   const { category } = useParams();
   const categoryName = category?.replace("-", " ").toUpperCase() || "";
+  const listingsRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to listings when category changes
+  useEffect(() => {
+    if (listingsRef.current) {
+      listingsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [category]);
 
   // Filter vehicles based on category
   const filteredVehicles = mockVehicles.filter((vehicle) => {
@@ -53,7 +62,7 @@ const CategoryPage = () => {
       </section>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div ref={listingsRef} className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
           <aside className="lg:w-64 flex-shrink-0">

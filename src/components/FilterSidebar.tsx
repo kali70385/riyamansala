@@ -16,11 +16,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { makes, types, conditions, priceRanges, districts, transmissions, fuelTypes, vehicleModels, categories } from "@/data/mockData";
 import { useState, useMemo } from "react";
 import { Check } from "lucide-react";
@@ -32,7 +27,7 @@ const FilterSidebar = () => {
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedMake, setSelectedMake] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("");
-  const [openModelCombobox, setOpenModelCombobox] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   
   // Get available models based on selected type and make
   const availableModels = useMemo(() => {
@@ -76,35 +71,39 @@ const FilterSidebar = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Model - FIRST FILTER */}
         <div className="space-y-2 md:col-span-2">
-        <Label className="text-sm font-medium">Model</Label>
-        <Popover open={openModelCombobox} onOpenChange={setOpenModelCombobox}>
+          <Label className="text-sm font-medium">Model</Label>
           <div className="relative">
             <Input
               value={selectedModel}
               onChange={(e) => {
                 setSelectedModel(e.target.value);
-                // Only show suggestions if 4+ characters typed
-                if (e.target.value.length >= 4 && availableModels.filter((model) => 
-                  model.toLowerCase().includes(e.target.value.toLowerCase())
+                // Show suggestions if 4+ characters typed and matches found
+                setShowSuggestions(
+                  e.target.value.length >= 4 && 
+                  availableModels.filter((model) => 
+                    model.toLowerCase().includes(e.target.value.toLowerCase())
+                  ).length > 0
+                );
+              }}
+              onFocus={() => {
+                // Show suggestions on focus if criteria met
+                if (selectedModel.length >= 4 && availableModels.filter((model) => 
+                  model.toLowerCase().includes(selectedModel.toLowerCase())
                 ).length > 0) {
-                  setOpenModelCombobox(true);
-                } else {
-                  setOpenModelCombobox(false);
+                  setShowSuggestions(true);
                 }
+              }}
+              onBlur={() => {
+                // Delay to allow click on suggestion
+                setTimeout(() => setShowSuggestions(false), 200);
               }}
               placeholder="Type model name (min 4 letters for suggestions)..."
               className="w-full"
             />
-            {openModelCombobox && selectedModel.length >= 4 && (
-              <PopoverContent 
-                className={cn("p-0 bg-popover border shadow-lg", "w-full max-w-[400px]")}
-                align="start" 
-                onOpenAutoFocus={(e) => e.preventDefault()}
-                side="bottom"
-                sideOffset={4}
-              >
+            {showSuggestions && selectedModel.length >= 4 && (
+              <div className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg max-h-[300px] overflow-auto">
                 <Command className="bg-popover">
-                  <CommandList className="max-h-[300px]">
+                  <CommandList>
                     <CommandGroup>
                       {availableModels
                         .filter((model) => 
@@ -117,7 +116,7 @@ const FilterSidebar = () => {
                             value={model}
                             onSelect={(value) => {
                               setSelectedModel(value);
-                              setOpenModelCombobox(false);
+                              setShowSuggestions(false);
                             }}
                           >
                             <Check
@@ -132,10 +131,9 @@ const FilterSidebar = () => {
                     </CommandGroup>
                   </CommandList>
                 </Command>
-              </PopoverContent>
+              </div>
             )}
           </div>
-        </Popover>
         </div>
 
         {/* Make */}
