@@ -70,11 +70,12 @@ const FilterSidebar = () => {
   }, [selectedType, selectedMake]);
 
   return (
-    <div className="bg-card rounded-lg border border-border shadow-sm p-4 space-y-4">
+    <div className="bg-card rounded-lg border border-border shadow-sm p-4">
       <h3 className="font-semibold text-lg mb-4">Filters</h3>
 
-      {/* Model - FIRST FILTER */}
-      <div className="space-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Model - FIRST FILTER */}
+        <div className="space-y-2 md:col-span-2">
         <Label className="text-sm font-medium">Model</Label>
         <Popover open={openModelCombobox} onOpenChange={setOpenModelCombobox}>
           <div className="relative">
@@ -135,10 +136,10 @@ const FilterSidebar = () => {
             )}
           </div>
         </Popover>
-      </div>
+        </div>
 
-      {/* Make */}
-      <div className="space-y-2">
+        {/* Make */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">Make</Label>
         <Select onValueChange={setSelectedMake}>
           <SelectTrigger>
@@ -152,10 +153,10 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+        </div>
 
-      {/* Type */}
-      <div className="space-y-2">
+        {/* Type */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">Type</Label>
         <Select onValueChange={setSelectedType}>
           <SelectTrigger>
@@ -169,10 +170,10 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+        </div>
 
-      {/* Condition */}
-      <div className="space-y-2">
+        {/* Condition */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">Condition</Label>
         <Select>
           <SelectTrigger>
@@ -186,10 +187,10 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+        </div>
 
-      {/* Price Range */}
-      <div className="space-y-2">
+        {/* Price Range */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">Price Range</Label>
         <Select>
           <SelectTrigger>
@@ -203,10 +204,10 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+        </div>
 
-      {/* District */}
-      <div className="space-y-2">
+        {/* District */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">District</Label>
         <Select>
           <SelectTrigger>
@@ -220,10 +221,10 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+        </div>
 
-      {/* Year Min */}
-      <div className="space-y-3">
+        {/* Year Min */}
+        <div className="space-y-3">
         <div className="flex justify-between items-center">
           <Label className="text-sm font-medium">Year (Min)</Label>
           <span className="text-sm text-muted-foreground">{yearMin[0]}</span>
@@ -236,10 +237,10 @@ const FilterSidebar = () => {
           step={1}
           className="w-full"
         />
-      </div>
+        </div>
 
-      {/* Year Max */}
-      <div className="space-y-3">
+        {/* Year Max */}
+        <div className="space-y-3">
         <div className="flex justify-between items-center">
           <Label className="text-sm font-medium">Year (Max)</Label>
           <span className="text-sm text-muted-foreground">{yearMax[0]}</span>
@@ -252,10 +253,10 @@ const FilterSidebar = () => {
           step={1}
           className="w-full"
         />
-      </div>
+        </div>
 
-      {/* Transmission */}
-      <div className="space-y-2">
+        {/* Transmission */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">Gear</Label>
         <Select>
           <SelectTrigger>
@@ -269,10 +270,10 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
+        </div>
 
-      {/* Fuel Type */}
-      <div className="space-y-2">
+        {/* Fuel Type */}
+        <div className="space-y-2">
         <Label className="text-sm font-medium">Fuel</Label>
         <Select>
           <SelectTrigger>
@@ -286,6 +287,7 @@ const FilterSidebar = () => {
             ))}
           </SelectContent>
         </Select>
+        </div>
       </div>
     </div>
   );
