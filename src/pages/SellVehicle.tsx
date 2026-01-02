@@ -10,8 +10,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { categories } from "@/data/mockData";
+import { categories, types } from "@/data/mockData";
 import { Loader2, Upload, X } from "lucide-react";
+import ModelAutocomplete from "@/components/ModelAutocomplete";
 
 const SellVehicle = () => {
   const { toast } = useToast();
@@ -303,12 +304,13 @@ const SellVehicle = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="model">Model *</Label>
-                      <Input 
-                        id="model" 
-                        placeholder="e.g., Prius" 
-                        required 
+                      <ModelAutocomplete
                         value={formData.model}
-                        onChange={(e) => setFormData({...formData, model: e.target.value})}
+                        onChange={(value) => setFormData({...formData, model: value})}
+                        selectedType={types.find(t => t.toLowerCase() === formData.category) || ""}
+                        selectedMake={formData.make}
+                        placeholder="e.g., Prius"
+                        minChars={2}
                       />
                     </div>
 
