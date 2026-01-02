@@ -27,13 +27,16 @@ const Header = () => {
       {/* Top Bar with Logo */}
       <div className="bg-primary text-primary-foreground py-2">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="flex items-center shrink-0">
+          {/* Logo and Tagline */}
+          <Link to="/" className="flex items-center gap-3 shrink-0">
             <img 
               src={riyamansalaLogo} 
               alt="Riyamansala Logo" 
               className="h-10 md:h-12 w-auto rounded-md object-contain" 
             />
+            <span className="hidden sm:inline text-sm md:text-base font-medium text-primary-foreground">
+              Riyamansala - Sri Lanka's Trusted Vehicle Marketplace
+            </span>
           </Link>
 
           {/* Right side actions */}
