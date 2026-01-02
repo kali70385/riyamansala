@@ -7,19 +7,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Input } from "@/components/ui/input";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { makes, types, conditions, priceRanges, districts, transmissions, fuelTypes, vehicleModels, categories } from "@/data/mockData";
-import { useState, useMemo } from "react";
-import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { makes, types, conditions, priceRanges, districts, transmissions, fuelTypes } from "@/data/mockData";
+import { useState } from "react";
+import ModelAutocomplete from "@/components/ModelAutocomplete";
 
 const FilterSidebar = () => {
   const [yearMin, setYearMin] = useState([1979]);
@@ -27,42 +17,6 @@ const FilterSidebar = () => {
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedMake, setSelectedMake] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("");
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  
-  // Get available models based on selected type and make
-  const availableModels = useMemo(() => {
-    // If both type and make are selected, filter by them
-    if (selectedType && selectedMake) {
-      const categoryMap: Record<string, string> = {
-        "Car": "Cars",
-        "Van": "Vans",
-        "SUV/Jeep": "SUVs",
-        "Three Wheel": "Three Wheel",
-        "Pickup/Double Cab": "Pickups",
-        "Crew Cab": "Pickups",
-        "Lorry/Tipper": "Lorries",
-        "Heavy-Duty": "Heavy-Duty",
-        "Motorcycle": "Motorbikes",
-        "Bus": "Vans",
-      };
-      
-      const category = categoryMap[selectedType];
-      if (!category || !vehicleModels[category]) return [];
-      
-      return vehicleModels[category][selectedMake] || [];
-    }
-    
-    // Otherwise, return all models from all categories, sorted alphabetically
-    const allModels: string[] = [];
-    Object.values(vehicleModels).forEach((category) => {
-      Object.values(category).forEach((models) => {
-        allModels.push(...models);
-      });
-    });
-    
-    // Remove duplicates and sort
-    return [...new Set(allModels)].sort();
-  }, [selectedType, selectedMake]);
 
   return (
     <div className="bg-card rounded-lg border border-border shadow-sm p-4">
@@ -72,68 +26,13 @@ const FilterSidebar = () => {
         {/* Model - FIRST FILTER */}
         <div className="space-y-2 md:col-span-2">
           <Label className="text-sm font-medium">Model</Label>
-          <div className="relative">
-            <Input
-              value={selectedModel}
-              onChange={(e) => {
-                setSelectedModel(e.target.value);
-                // Show suggestions if 4+ characters typed and matches found
-                setShowSuggestions(
-                  e.target.value.length >= 4 && 
-                  availableModels.filter((model) => 
-                    model.toLowerCase().includes(e.target.value.toLowerCase())
-                  ).length > 0
-                );
-              }}
-              onFocus={() => {
-                // Show suggestions on focus if criteria met
-                if (selectedModel.length >= 4 && availableModels.filter((model) => 
-                  model.toLowerCase().includes(selectedModel.toLowerCase())
-                ).length > 0) {
-                  setShowSuggestions(true);
-                }
-              }}
-              onBlur={() => {
-                // Delay to allow click on suggestion
-                setTimeout(() => setShowSuggestions(false), 200);
-              }}
-              placeholder="Type model name (min 4 letters for suggestions)..."
-              className="w-full"
-            />
-            {showSuggestions && selectedModel.length >= 4 && (
-              <div className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg max-h-[300px] overflow-auto">
-                <Command className="bg-popover">
-                  <CommandList>
-                    <CommandGroup>
-                      {availableModels
-                        .filter((model) => 
-                          model.toLowerCase().includes(selectedModel.toLowerCase())
-                        )
-                        .slice(0, 50)
-                        .map((model) => (
-                          <CommandItem
-                            key={model}
-                            value={model}
-                            onSelect={(value) => {
-                              setSelectedModel(value);
-                              setShowSuggestions(false);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                selectedModel === model ? "opacity-100" : "opacity-0"
-                              )}
-                            />
-                            {model}
-                          </CommandItem>
-                        ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </div>
-            )}
-          </div>
+          <ModelAutocomplete
+            value={selectedModel}
+            onChange={setSelectedModel}
+            selectedType={selectedType}
+            selectedMake={selectedMake}
+            placeholder="Type model name (min 4 letters for suggestions)..."
+          />
         </div>
 
         {/* Make */}
