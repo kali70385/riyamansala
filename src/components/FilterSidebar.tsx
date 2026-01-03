@@ -11,7 +11,11 @@ import { makes, types, conditions, priceRanges, districts, transmissions, fuelTy
 import { useState } from "react";
 import ModelAutocomplete from "@/components/ModelAutocomplete";
 
-const FilterSidebar = () => {
+interface FilterSidebarProps {
+  category?: string;
+}
+
+const FilterSidebar = ({ category }: FilterSidebarProps) => {
   const [yearMin, setYearMin] = useState([1979]);
   const [yearMax, setYearMax] = useState([2025]);
   const [selectedType, setSelectedType] = useState<string>("");
@@ -31,7 +35,8 @@ const FilterSidebar = () => {
             onChange={setSelectedModel}
             selectedType={selectedType}
             selectedMake={selectedMake}
-            placeholder="Type model name (min 4 letters for suggestions)..."
+            selectedCategory={category}
+            placeholder="Type model name (min 2 letters)..."
           />
         </div>
 

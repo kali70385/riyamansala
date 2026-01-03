@@ -66,7 +66,7 @@ const CategoryPage = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
           <aside className="lg:w-64 flex-shrink-0">
-            <FilterSidebar />
+            <FilterSidebar category={category} />
           </aside>
 
           {/* Listings */}

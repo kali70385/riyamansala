@@ -15,6 +15,7 @@ interface ModelAutocompleteProps {
   onChange: (value: string) => void;
   selectedType?: string;
   selectedMake?: string;
+  selectedCategory?: string; // URL category like "cars", "suvs", etc.
   placeholder?: string;
   className?: string;
   minChars?: number;
@@ -25,34 +26,63 @@ const ModelAutocomplete = ({
   onChange,
   selectedType,
   selectedMake,
-  placeholder = "Type model name (min 4 letters for suggestions)...",
+  selectedCategory,
+  placeholder = "Type model name (min 2 letters for suggestions)...",
   className,
-  minChars = 4,
+  minChars = 2,
 }: ModelAutocompleteProps) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Get available models based on selected type and make
+  // Map URL category to vehicleModels key
+  const urlCategoryToModelsKey: Record<string, string> = {
+    "cars": "Cars",
+    "suvs": "SUVs",
+    "vans": "Vans",
+    "motorbikes": "Motorbikes",
+    "three-wheel": "Three Wheel",
+    "pickups": "Pickups",
+    "lorries": "Lorries",
+    "heavy-duty": "Heavy-Duty",
+  };
+
+  // Map type to vehicleModels key
+  const typeToModelsKey: Record<string, string> = {
+    "Car": "Cars",
+    "Van": "Vans",
+    "SUV/Jeep": "SUVs",
+    "Three Wheel": "Three Wheel",
+    "Pickup/Double Cab": "Pickups",
+    "Crew Cab": "Pickups",
+    "Lorry/Tipper": "Lorries",
+    "Heavy-Duty": "Heavy-Duty",
+    "Motorcycle": "Motorbikes",
+    "Bus": "Vans",
+  };
+
+  // Get available models based on selected category, type, and make
   const availableModels = useMemo(() => {
-    // If both type and make are selected, filter by them
-    if (selectedType && selectedMake) {
-      const categoryMap: Record<string, string> = {
-        "Car": "Cars",
-        "Van": "Vans",
-        "SUV/Jeep": "SUVs",
-        "Three Wheel": "Three Wheel",
-        "Pickup/Double Cab": "Pickups",
-        "Crew Cab": "Pickups",
-        "Lorry/Tipper": "Lorries",
-        "Heavy-Duty": "Heavy-Duty",
-        "Motorcycle": "Motorbikes",
-        "Bus": "Vans",
-      };
-      
-      const category = categoryMap[selectedType];
-      if (!category || !vehicleModels[category]) return [];
-      
-      return vehicleModels[category][selectedMake] || [];
+    // Determine which category to filter by (URL category takes precedence)
+    const modelsCategory = selectedCategory 
+      ? urlCategoryToModelsKey[selectedCategory.toLowerCase()] 
+      : selectedType 
+        ? typeToModelsKey[selectedType] 
+        : null;
+
+    // If we have a category and make, filter by both
+    if (modelsCategory && selectedMake) {
+      if (!vehicleModels[modelsCategory]) return [];
+      return vehicleModels[modelsCategory][selectedMake] || [];
+    }
+
+    // If only category is selected, get all models for that category
+    if (modelsCategory) {
+      if (!vehicleModels[modelsCategory]) return [];
+      const allModels: string[] = [];
+      Object.values(vehicleModels[modelsCategory]).forEach((models) => {
+        allModels.push(...models);
+      });
+      return [...new Set(allModels)].sort();
     }
     
     // If only make is selected, get all models for that make across categories
@@ -76,7 +106,7 @@ const ModelAutocomplete = ({
     
     // Remove duplicates and sort
     return [...new Set(allModels)].sort();
-  }, [selectedType, selectedMake]);
+  }, [selectedType, selectedMake, selectedCategory]);
 
   const filteredModels = useMemo(() => {
     if (value.length < minChars) return [];
