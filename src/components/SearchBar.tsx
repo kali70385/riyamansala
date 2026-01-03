@@ -12,9 +12,9 @@ const SearchBar = () => {
         <ModelAutocomplete
           value={searchValue}
           onChange={setSearchValue}
-          placeholder="Search by model name (min 4 letters for suggestions)..."
+          placeholder="Search by model name (min 2 letters)..."
           className="flex-1"
-          minChars={4}
+          minChars={2}
         />
         
         <Button className="bg-primary hover:bg-primary/90">
