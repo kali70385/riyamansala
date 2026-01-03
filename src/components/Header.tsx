@@ -34,8 +34,9 @@ const Header = () => {
               alt="Riyamansala Logo" 
               className="h-10 md:h-12 w-auto rounded-md object-contain" 
             />
-            <span className="hidden sm:inline text-sm md:text-base font-medium text-primary-foreground">
-              Riyamansala - Sri Lanka's Trusted Vehicle Marketplace
+            <span className="text-xs sm:text-sm md:text-base font-medium text-primary-foreground">
+              <span className="sm:hidden">Riyamansala</span>
+              <span className="hidden sm:inline">Riyamansala - Sri Lanka's Trusted Vehicle Marketplace</span>
             </span>
           </Link>
 
