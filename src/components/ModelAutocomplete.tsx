@@ -44,6 +44,7 @@ const ModelAutocomplete = ({
     "pickups": "Pickups",
     "lorries": "Lorries",
     "heavy-duty": "Heavy-Duty",
+    "spare-parts": "Spare Parts",
   };
 
   // Map type to vehicleModels key
