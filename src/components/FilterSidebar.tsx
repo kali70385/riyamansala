@@ -57,22 +57,24 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
         </Select>
         </div>
 
-        {/* Type */}
-        <div className="space-y-2">
-        <Label className="text-sm font-medium">Type</Label>
-        <Select onValueChange={setSelectedType}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select type" />
-          </SelectTrigger>
-          <SelectContent>
-            {types.map((type) => (
-              <SelectItem key={type} value={type}>
-                {type}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        </div>
+        {/* Type - Hidden when on a category page */}
+        {!category && (
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Type</Label>
+            <Select onValueChange={setSelectedType}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent>
+                {types.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         {/* Condition */}
         <div className="space-y-2">
