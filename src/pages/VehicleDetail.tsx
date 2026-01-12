@@ -215,6 +215,11 @@ const VehicleDetail = () => {
                     <Phone className="w-4 h-4 mr-2" />
                     Contact Seller
                   </Button>
+                  <Link to={`/seller/mock-${vehicle.sellerName.toLowerCase().replace(/\s+/g, "-")}`}>
+                    <Button variant="ghost" className="w-full">
+                      View Seller Profile
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
