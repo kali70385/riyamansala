@@ -198,13 +198,22 @@ const VehicleDetail = () => {
             <Card>
               <CardContent className="p-6">
                 <h3 className="font-semibold mb-4 text-foreground">Seller Information</h3>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <p className="font-medium text-foreground">{vehicle.sellerName}</p>
-                  <p className="text-sm text-muted-foreground">
-                    Phone: {vehicle.sellerPhone}
-                  </p>
-                  <Button variant="outline" className="w-full mt-4">
-                    View Profile
+                  <a 
+                    href={`tel:${vehicle.sellerPhone}`}
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Phone className="w-4 h-4" />
+                    {vehicle.sellerPhone}
+                  </a>
+                  <Button 
+                    variant="outline" 
+                    className="w-full mt-2"
+                    onClick={() => window.location.href = `tel:${vehicle.sellerPhone}`}
+                  >
+                    <Phone className="w-4 h-4 mr-2" />
+                    Contact Seller
                   </Button>
                 </div>
               </CardContent>
