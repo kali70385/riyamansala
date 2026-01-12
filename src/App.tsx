@@ -15,6 +15,7 @@ import FAQ from "./pages/FAQ";
 import SellVehicle from "./pages/SellVehicle";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import SellerProfile from "./pages/SellerProfile";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/sell-vehicle" element={<SellVehicle />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/seller/:sellerId" element={<SellerProfile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
