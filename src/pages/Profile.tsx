@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Listing {
   id: string;
@@ -130,18 +131,28 @@ const Profile = () => {
               <CardDescription>Your account details</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <p className="text-sm text-muted-foreground">Name</p>
-                <p className="font-medium">{profile?.full_name || "Not set"}</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Email</p>
-                <p className="font-medium">{user?.email}</p>
+              <div className="flex items-center gap-4">
+                <Avatar className="h-16 w-16">
+                  <AvatarImage src={profile?.avatar_url || undefined} />
+                  <AvatarFallback className="bg-primary/10 text-primary text-lg">
+                    {profile?.full_name?.charAt(0)?.toUpperCase() || "U"}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium text-lg">{profile?.full_name || "Not set"}</p>
+                  <p className="text-sm text-muted-foreground">{user?.email}</p>
+                </div>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Phone</p>
                 <p className="font-medium">{profile?.phone || "Not set"}</p>
               </div>
+              {profile?.bio && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Bio</p>
+                  <p className="font-medium">{profile.bio}</p>
+                </div>
+              )}
               <Button onClick={handleLogout} variant="outline">
                 Logout
               </Button>
