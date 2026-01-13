@@ -17,6 +17,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [bio, setBio] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -136,14 +137,25 @@ const Auth = () => {
       return;
     }
 
-    // Upload avatar if provided and user was created
-    if (data.user && avatarFile) {
-      const avatarUrl = await uploadAvatar(data.user.id);
-      if (avatarUrl) {
-        // Update profile with avatar URL
+    // Upload avatar and update bio if provided
+    if (data.user) {
+      const updates: { avatar_url?: string; bio?: string } = {};
+      
+      if (avatarFile) {
+        const avatarUrl = await uploadAvatar(data.user.id);
+        if (avatarUrl) {
+          updates.avatar_url = avatarUrl;
+        }
+      }
+      
+      if (bio.trim()) {
+        updates.bio = bio.trim();
+      }
+      
+      if (Object.keys(updates).length > 0) {
         await supabase
           .from('profiles')
-          .update({ avatar_url: avatarUrl })
+          .update(updates)
           .eq('user_id', data.user.id);
       }
     }
@@ -259,6 +271,19 @@ const Auth = () => {
                       onChange={(e) => setPhone(e.target.value)}
                       required
                     />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="signup-bio">Bio (Optional)</Label>
+                    <textarea
+                      id="signup-bio"
+                      placeholder="Tell us about yourself... (max 400 characters)"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value.slice(0, 400))}
+                      className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      maxLength={400}
+                    />
+                    <p className="text-xs text-muted-foreground text-right mt-1">{bio.length}/400</p>
                   </div>
                   
                   <div>
