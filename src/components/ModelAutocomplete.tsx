@@ -6,7 +6,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { vehicleModels } from "@/data/mockData";
+import { vehicleModelsData } from "@/data/vehicleModels";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -72,15 +72,15 @@ const ModelAutocomplete = ({
 
     // If we have a category and make, filter by both
     if (modelsCategory && selectedMake) {
-      if (!vehicleModels[modelsCategory]) return [];
-      return vehicleModels[modelsCategory][selectedMake] || [];
+      if (!vehicleModelsData[modelsCategory]) return [];
+      return vehicleModelsData[modelsCategory][selectedMake] || [];
     }
 
     // If only category is selected, get all models for that category
     if (modelsCategory) {
-      if (!vehicleModels[modelsCategory]) return [];
+      if (!vehicleModelsData[modelsCategory]) return [];
       const allModels: string[] = [];
-      Object.values(vehicleModels[modelsCategory]).forEach((models) => {
+      Object.values(vehicleModelsData[modelsCategory]).forEach((models) => {
         allModels.push(...models);
       });
       return [...new Set(allModels)].sort();
@@ -89,7 +89,7 @@ const ModelAutocomplete = ({
     // If only make is selected, get all models for that make across categories
     if (selectedMake) {
       const allModels: string[] = [];
-      Object.values(vehicleModels).forEach((category) => {
+      Object.values(vehicleModelsData).forEach((category) => {
         if (category[selectedMake]) {
           allModels.push(...category[selectedMake]);
         }
@@ -99,7 +99,7 @@ const ModelAutocomplete = ({
     
     // Otherwise, return all models from all categories, sorted alphabetically
     const allModels: string[] = [];
-    Object.values(vehicleModels).forEach((category) => {
+    Object.values(vehicleModelsData).forEach((category) => {
       Object.values(category).forEach((models) => {
         allModels.push(...models);
       });
