@@ -1,10 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FilterSidebar from "@/components/FilterSidebar";
+import FilterSidebar, { FilterValues } from "@/components/FilterSidebar";
 import VehicleCard from "@/components/VehicleCard";
-import { mockVehicles } from "@/data/mockData";
+import { mockVehicles, priceRanges } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -12,6 +12,7 @@ const CategoryPage = () => {
   const { category } = useParams();
   const categoryName = category?.replace("-", " ").toUpperCase() || "";
   const listingsRef = useRef<HTMLDivElement>(null);
+  const [appliedFilters, setAppliedFilters] = useState<FilterValues | null>(null);
 
   // Scroll to listings when category changes
   useEffect(() => {
@@ -20,18 +21,87 @@ const CategoryPage = () => {
     }
   }, [category]);
 
-  // Filter vehicles based on category
+  const handleSearch = (filters: FilterValues) => {
+    setAppliedFilters(filters);
+  };
+
+  // Get price range bounds from label
+  const getPriceRangeBounds = (label: string): { min: number; max: number } | null => {
+    const range = priceRanges.find(r => r.label === label);
+    if (!range) return null;
+    return { min: range.min, max: range.max };
+  };
+
+  // Filter vehicles based on category and applied filters
   const filteredVehicles = mockVehicles.filter((vehicle) => {
     const vehicleCategory = vehicle.type.toLowerCase();
     const urlCategory = category?.toLowerCase() || "";
     
     // Map URL categories to vehicle types
-    if (urlCategory === "cars") return vehicleCategory === "car";
-    if (urlCategory === "suvs") return vehicleCategory === "suv/jeep";
-    if (urlCategory === "vans") return vehicleCategory === "van";
-    if (urlCategory === "motorbikes") return vehicleCategory === "motorcycle";
-    if (urlCategory === "three-wheel") return vehicleCategory === "three wheel";
-    if (urlCategory === "pickups") return vehicleCategory.includes("pickup");
+    let categoryMatch = true;
+    if (urlCategory === "cars") categoryMatch = vehicleCategory === "car";
+    else if (urlCategory === "suvs") categoryMatch = vehicleCategory === "suv/jeep";
+    else if (urlCategory === "vans") categoryMatch = vehicleCategory === "van";
+    else if (urlCategory === "motorbikes") categoryMatch = vehicleCategory === "motorcycle";
+    else if (urlCategory === "three-wheel") categoryMatch = vehicleCategory === "three wheel";
+    else if (urlCategory === "pickups") categoryMatch = vehicleCategory.includes("pickup");
+    
+    if (!categoryMatch) return false;
+
+    // Apply additional filters if set
+    if (appliedFilters) {
+      // Model filter
+      if (appliedFilters.model && !vehicle.model.toLowerCase().includes(appliedFilters.model.toLowerCase())) {
+        return false;
+      }
+      
+      // Make filter
+      if (appliedFilters.make && vehicle.make.toLowerCase() !== appliedFilters.make.toLowerCase()) {
+        return false;
+      }
+      
+      // Type filter (only when not on category page)
+      if (appliedFilters.type && !category) {
+        if (vehicle.type.toLowerCase() !== appliedFilters.type.toLowerCase()) {
+          return false;
+        }
+      }
+      
+      // Condition filter
+      if (appliedFilters.condition && vehicle.condition.toLowerCase() !== appliedFilters.condition.toLowerCase()) {
+        return false;
+      }
+      
+      // Price range filter
+      if (appliedFilters.priceRange) {
+        const bounds = getPriceRangeBounds(appliedFilters.priceRange);
+        if (bounds) {
+          if (vehicle.price < bounds.min || vehicle.price > bounds.max) {
+            return false;
+          }
+        }
+      }
+      
+      // District filter
+      if (appliedFilters.district && vehicle.district.toLowerCase() !== appliedFilters.district.toLowerCase()) {
+        return false;
+      }
+      
+      // Year range filter
+      if (vehicle.year < appliedFilters.yearMin || vehicle.year > appliedFilters.yearMax) {
+        return false;
+      }
+      
+      // Transmission filter
+      if (appliedFilters.transmission && vehicle.transmission.toLowerCase() !== appliedFilters.transmission.toLowerCase()) {
+        return false;
+      }
+      
+      // Fuel type filter
+      if (appliedFilters.fuelType && vehicle.fuelType.toLowerCase() !== appliedFilters.fuelType.toLowerCase()) {
+        return false;
+      }
+    }
     
     return true;
   });
@@ -66,7 +136,7 @@ const CategoryPage = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
           <aside className="lg:w-64 flex-shrink-0">
-            <FilterSidebar category={category} />
+            <FilterSidebar category={category} onSearch={handleSearch} />
           </aside>
 
           {/* Listings */}
@@ -80,7 +150,7 @@ const CategoryPage = () => {
             ) : (
               <div className="text-center py-16">
                 <p className="text-xl text-muted-foreground">
-                  No vehicles found in this category
+                  No vehicles found matching your filters
                 </p>
                 <Link to="/">
                   <Button className="mt-4">View All Listings</Button>
