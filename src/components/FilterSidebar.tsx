@@ -11,24 +11,88 @@ import { makes, types, conditions, priceRanges, districts, transmissions, fuelTy
 import { useState } from "react";
 import ModelAutocomplete from "@/components/ModelAutocomplete";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Filter } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, Search, X } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
-interface FilterSidebarProps {
-  category?: string;
+export interface FilterValues {
+  model: string;
+  make: string;
+  type: string;
+  condition: string;
+  priceRange: string;
+  district: string;
+  yearMin: number;
+  yearMax: number;
+  transmission: string;
+  fuelType: string;
 }
 
-const FilterSidebar = ({ category }: FilterSidebarProps) => {
+interface FilterSidebarProps {
+  category?: string;
+  onSearch?: (filters: FilterValues) => void;
+}
+
+const FilterSidebar = ({ category, onSearch }: FilterSidebarProps) => {
   const [yearMin, setYearMin] = useState([1979]);
   const [yearMax, setYearMax] = useState([2025]);
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedMake, setSelectedMake] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("");
+  const [selectedCondition, setSelectedCondition] = useState<string>("");
+  const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [selectedTransmission, setSelectedTransmission] = useState<string>("");
+  const [selectedFuelType, setSelectedFuelType] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleSearch = () => {
+    const filters: FilterValues = {
+      model: selectedModel,
+      make: selectedMake,
+      type: selectedType,
+      condition: selectedCondition,
+      priceRange: selectedPriceRange,
+      district: selectedDistrict,
+      yearMin: yearMin[0],
+      yearMax: yearMax[0],
+      transmission: selectedTransmission,
+      fuelType: selectedFuelType,
+    };
+    onSearch?.(filters);
+    setIsOpen(false); // Close mobile filter on search
+  };
+
+  const handleClearFilters = () => {
+    setSelectedModel("");
+    setSelectedMake("");
+    setSelectedType("");
+    setSelectedCondition("");
+    setSelectedPriceRange("");
+    setSelectedDistrict("");
+    setYearMin([1979]);
+    setYearMax([2025]);
+    setSelectedTransmission("");
+    setSelectedFuelType("");
+    
+    // Also trigger search with cleared values
+    const clearedFilters: FilterValues = {
+      model: "",
+      make: "",
+      type: "",
+      condition: "",
+      priceRange: "",
+      district: "",
+      yearMin: 1979,
+      yearMax: 2025,
+      transmission: "",
+      fuelType: "",
+    };
+    onSearch?.(clearedFilters);
+  };
 
   return (
     <div className="bg-card rounded-lg border border-border shadow-sm p-3 md:p-4">
@@ -69,7 +133,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {/* Make */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">Make</Label>
-              <Select onValueChange={setSelectedMake}>
+              <Select value={selectedMake} onValueChange={setSelectedMake}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="Make" />
                 </SelectTrigger>
@@ -87,7 +151,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {!category && (
               <div className="space-y-1">
                 <Label className="text-xs font-medium">Type</Label>
-                <Select onValueChange={setSelectedType}>
+                <Select value={selectedType} onValueChange={setSelectedType}>
                   <SelectTrigger className="h-9 text-sm">
                     <SelectValue placeholder="Type" />
                   </SelectTrigger>
@@ -105,7 +169,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {/* Condition */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">Condition</Label>
-              <Select>
+              <Select value={selectedCondition} onValueChange={setSelectedCondition}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="Condition" />
                 </SelectTrigger>
@@ -122,7 +186,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {/* Price Range */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">Price</Label>
-              <Select>
+              <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="Price" />
                 </SelectTrigger>
@@ -139,7 +203,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {/* District */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">District</Label>
-              <Select>
+              <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="District" />
                 </SelectTrigger>
@@ -188,7 +252,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {/* Transmission */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">Gear</Label>
-              <Select>
+              <Select value={selectedTransmission} onValueChange={setSelectedTransmission}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="Gear" />
                 </SelectTrigger>
@@ -205,7 +269,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
             {/* Fuel Type */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">Fuel</Label>
-              <Select>
+              <Select value={selectedFuelType} onValueChange={setSelectedFuelType}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="Fuel" />
                 </SelectTrigger>
@@ -217,6 +281,25 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+
+            {/* Search Button - Mobile */}
+            <div className="col-span-2 flex gap-2 mt-2">
+              <Button 
+                onClick={handleClearFilters} 
+                variant="outline" 
+                className="flex-1"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear
+              </Button>
+              <Button 
+                onClick={handleSearch} 
+                className="flex-1"
+              >
+                <Search className="h-4 w-4 mr-1" />
+                Search
+              </Button>
             </div>
           </div>
         </CollapsibleContent>
@@ -243,7 +326,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {/* Make */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Make</Label>
-            <Select onValueChange={setSelectedMake}>
+            <Select value={selectedMake} onValueChange={setSelectedMake}>
               <SelectTrigger>
                 <SelectValue placeholder="Select make" />
               </SelectTrigger>
@@ -261,7 +344,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {!category && (
             <div className="space-y-2">
               <Label className="text-sm font-medium">Type</Label>
-              <Select onValueChange={setSelectedType}>
+              <Select value={selectedType} onValueChange={setSelectedType}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -279,7 +362,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {/* Condition */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Condition</Label>
-            <Select>
+            <Select value={selectedCondition} onValueChange={setSelectedCondition}>
               <SelectTrigger>
                 <SelectValue placeholder="Select condition" />
               </SelectTrigger>
@@ -296,7 +379,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {/* Price Range */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Price Range</Label>
-            <Select>
+            <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
               <SelectTrigger>
                 <SelectValue placeholder="Select price range" />
               </SelectTrigger>
@@ -313,7 +396,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {/* District */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">District</Label>
-            <Select>
+            <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
               <SelectTrigger>
                 <SelectValue placeholder="Select district" />
               </SelectTrigger>
@@ -362,7 +445,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {/* Transmission */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Gear</Label>
-            <Select>
+            <Select value={selectedTransmission} onValueChange={setSelectedTransmission}>
               <SelectTrigger>
                 <SelectValue placeholder="Select transmission" />
               </SelectTrigger>
@@ -379,7 +462,7 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
           {/* Fuel Type */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Fuel</Label>
-            <Select>
+            <Select value={selectedFuelType} onValueChange={setSelectedFuelType}>
               <SelectTrigger>
                 <SelectValue placeholder="Select fuel type" />
               </SelectTrigger>
@@ -391,6 +474,25 @@ const FilterSidebar = ({ category }: FilterSidebarProps) => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Search Button - Desktop */}
+          <div className="col-span-2 flex gap-2 mt-2">
+            <Button 
+              onClick={handleClearFilters} 
+              variant="outline" 
+              className="flex-1"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear Filters
+            </Button>
+            <Button 
+              onClick={handleSearch} 
+              className="flex-1"
+            >
+              <Search className="h-4 w-4 mr-1" />
+              Search
+            </Button>
           </div>
         </div>
       </div>
