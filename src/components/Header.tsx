@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { User, PlusCircle, LogIn, LogOut, UserPlus, Settings } from "lucide-react";
+import { User, PlusCircle, LogIn, LogOut, UserPlus, Settings, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/mockData";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -17,25 +17,39 @@ import { toast } from "sonner";
 
 const Header = () => {
   const [user, setUser] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({
-      data: {
-        session
-      }
-    }) => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
-    });
+      if (session?.user) {
+        checkAdminRole(session.user.id);
+      }
+    };
+
+    checkSession();
+
     const {
       data: {
         subscription
       }
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        checkAdminRole(session.user.id);
+      } else {
+        setIsAdmin(false);
+      }
     });
     return () => subscription.unsubscribe();
   }, []);
+
+  const checkAdminRole = async (userId: string) => {
+    const { data } = await supabase.rpc('has_role', { _user_id: userId, _role: 'admin' });
+    setIsAdmin(data === true);
+  };
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -81,6 +95,17 @@ const Header = () => {
               <DropdownMenuContent align="end" className="w-48">
                 {user ? (
                   <>
+                    {isAdmin && (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin" className="flex items-center gap-2 cursor-pointer text-primary">
+                            <Shield className="w-4 h-4" />
+                            Admin Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                      </>
+                    )}
                     <DropdownMenuItem asChild>
                       <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
                         <Settings className="w-4 h-4" />
