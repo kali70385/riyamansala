@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { categories, types } from "@/data/mockData";
+import { types, makes, conditions, districts, transmissions, fuelTypes } from "@/data/mockData";
 import { Loader2, Upload, X } from "lucide-react";
 import ModelAutocomplete from "@/components/ModelAutocomplete";
 
@@ -274,15 +274,15 @@ const SellVehicle = () => {
                       <Select 
                         required 
                         value={formData.category}
-                        onValueChange={(value) => setFormData({...formData, category: value})}
+                        onValueChange={(value) => setFormData({...formData, category: value, make: "", model: ""})}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                         <SelectContent>
-                          {categories.map((category) => (
-                            <SelectItem key={category} value={category.toLowerCase()}>
-                              {category}
+                          {types.map((type) => (
+                            <SelectItem key={type} value={type.toLowerCase()}>
+                              {type}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -291,13 +291,22 @@ const SellVehicle = () => {
 
                     <div>
                       <Label htmlFor="make">Make *</Label>
-                      <Input 
-                        id="make" 
-                        placeholder="e.g., Toyota" 
+                      <Select 
                         required 
                         value={formData.make}
-                        onChange={(e) => setFormData({...formData, make: e.target.value})}
-                      />
+                        onValueChange={(value) => setFormData({...formData, make: value, model: ""})}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select make" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {makes.map((make) => (
+                            <SelectItem key={make} value={make}>
+                              {make}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
 
@@ -307,9 +316,10 @@ const SellVehicle = () => {
                       <ModelAutocomplete
                         value={formData.model}
                         onChange={(value) => setFormData({...formData, model: value})}
-                        selectedType={types.find(t => t.toLowerCase() === formData.category) || ""}
+                        selectedType=""
                         selectedMake={formData.make}
-                        placeholder="e.g., Prius"
+                        selectedCategory={formData.category}
+                        placeholder="Type model name (min 2 letters)..."
                         minChars={2}
                       />
                     </div>
@@ -370,10 +380,11 @@ const SellVehicle = () => {
                           <SelectValue placeholder="Select fuel type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="petrol">Petrol</SelectItem>
-                          <SelectItem value="diesel">Diesel</SelectItem>
-                          <SelectItem value="hybrid">Hybrid</SelectItem>
-                          <SelectItem value="electric">Electric</SelectItem>
+                          {fuelTypes.map((fuel) => (
+                            <SelectItem key={fuel} value={fuel}>
+                              {fuel}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
@@ -389,8 +400,11 @@ const SellVehicle = () => {
                           <SelectValue placeholder="Select transmission" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="automatic">Automatic</SelectItem>
-                          <SelectItem value="manual">Manual</SelectItem>
+                          {transmissions.map((transmission) => (
+                            <SelectItem key={transmission} value={transmission}>
+                              {transmission}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
@@ -406,9 +420,11 @@ const SellVehicle = () => {
                           <SelectValue placeholder="Select condition" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="new">Brand New</SelectItem>
-                          <SelectItem value="used">Used</SelectItem>
-                          <SelectItem value="reconditioned">Reconditioned</SelectItem>
+                          {conditions.map((condition) => (
+                            <SelectItem key={condition} value={condition}>
+                              {condition}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </div>
@@ -469,14 +485,23 @@ const SellVehicle = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="location">Location *</Label>
-                      <Input 
-                        id="location" 
-                        placeholder="e.g., Colombo" 
+                      <Label htmlFor="location">District *</Label>
+                      <Select 
                         required 
                         value={formData.location}
-                        onChange={(e) => setFormData({...formData, location: e.target.value})}
-                      />
+                        onValueChange={(value) => setFormData({...formData, location: value})}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select district" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {districts.map((district) => (
+                            <SelectItem key={district.name} value={district.name}>
+                              {district.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                 </div>
