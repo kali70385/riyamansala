@@ -16,6 +16,7 @@ import SellVehicle from "./pages/SellVehicle";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import SellerProfile from "./pages/SellerProfile";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/seller/:sellerId" element={<SellerProfile />} />
+          <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
