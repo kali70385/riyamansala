@@ -1,13 +1,24 @@
-import { Link } from "react-router-dom";
-import { User, PlusCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { User, PlusCircle, LogIn, LogOut, UserPlus, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/mockData";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import riyamansalaLogo from "@/assets/riyamansala-logo.png";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+
 const Header = () => {
   const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     supabase.auth.getSession().then(({
       data: {
@@ -25,6 +36,17 @@ const Header = () => {
     });
     return () => subscription.unsubscribe();
   }, []);
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast.error("Error logging out");
+    } else {
+      toast.success("Logged out successfully");
+      navigate("/");
+    }
+  };
+
   return <header className="bg-card border-b border-border sticky top-0 z-50 shadow-sm">
       {/* Top Bar with Logo */}
       <div className="bg-primary text-primary-foreground py-2">
@@ -48,17 +70,60 @@ const Header = () => {
               </Link>
             </Button>
 
-            {user ? <Button asChild variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
-                <Link to="/profile">
+            {/* User Dropdown Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
                   <User className="w-4 h-4 md:mr-2" />
-                  <span className="hidden md:inline">Profile</span>
-                </Link>
-              </Button> : <Button asChild variant="ghost" size="sm" className="text-primary-foreground hover:bg-primary-foreground/10">
-                <Link to="/auth">
-                  <User className="w-4 h-4 md:mr-2" />
-                  <span className="hidden md:inline">Login</span>
-                </Link>
-              </Button>}
+                  <span className="hidden md:inline">{user ? "Account" : "Menu"}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                {user ? (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
+                        <Settings className="w-4 h-4" />
+                        My Profile
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/sell-vehicle" className="flex items-center gap-2 cursor-pointer">
+                        <PlusCircle className="w-4 h-4" />
+                        Post New Ad
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive">
+                      <LogOut className="w-4 h-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link to="/auth" className="flex items-center gap-2 cursor-pointer">
+                        <LogIn className="w-4 h-4" />
+                        Login
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/auth?tab=register" className="flex items-center gap-2 cursor-pointer">
+                        <UserPlus className="w-4 h-4" />
+                        Register
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/sell-vehicle" className="flex items-center gap-2 cursor-pointer">
+                        <PlusCircle className="w-4 h-4" />
+                        Post Ad
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
