@@ -40,7 +40,23 @@ const parseVehicleModelsData = (): VehicleModelsData => {
       "Bestune": ["B70", "B50", "B90", "B30", "Pony"],
       "Junpai": ["A50", "A70"],
       "Xiali": [],
-      "Dongfeng": ["CA71"]
+      "Dongfeng": ["CA71"],
+      "BYD": ["Seal", "Dolphin", "Atto 3", "Han", "Tang", "Qin Plus", "Song Plus", "Seagull", "Sea Lion 07", "Denza N7"],
+      "NIO": ["ET5", "ET7", "ES6", "ES8", "EC6", "EC7", "EL6", "EL7", "EL8"],
+      "XPeng": ["P5", "P7", "P7+", "G3", "G6", "G9", "X9", "Mona M03"],
+      "Li Auto": ["L6", "L7", "L8", "L9", "Mega"],
+      "Geely": ["Emgrand", "Borui", "Binrui", "Preface", "Xingrui", "Galaxy E5", "Galaxy E8", "Galaxy L6", "Galaxy L7"],
+      "Jaguar": ["XE", "XF", "XJ", "F-Type", "I-Pace"],
+      "Porsche": ["911", "Taycan", "Panamera", "718 Boxster", "718 Cayman"],
+      "Ferrari": ["Roma", "Portofino M", "296 GTB", "SF90 Stradale", "F8 Tributo", "812 Superfast", "Purosangue"],
+      "Lamborghini": ["Huracan", "Urus", "Revuelto", "Temerario"],
+      "Maserati": ["Ghibli", "Quattroporte", "GranTurismo", "MC20", "GranCabrio"],
+      "Bentley": ["Continental GT", "Flying Spur", "Bentayga"],
+      "Rolls-Royce": ["Ghost", "Phantom", "Spectre", "Cullinan"],
+      "Aston Martin": ["Vantage", "DB12", "DBS", "DBX", "Valkyrie"],
+      "McLaren": ["Artura", "750S", "720S", "GT", "765LT"],
+      "Lotus": ["Emira", "Eletre", "Emeya", "Evija"],
+      "Tesla": ["Model 3", "Model S", "Model X", "Model Y", "Cybertruck", "Roadster"]
     },
     "SUVs": {
       "Toyota": ["Land Cruiser", "Prado", "RAV4", "Rush", "Fortuner", "C-HR", "Harrier", "Kluger", "Highlander", "Grand Highlander", "4Runner", "Sequoia", "Corolla Cross", "Venza", "bZ4X", "Urban Cruiser Hyryder", "Urban Cruiser Taisor", "Land Cruiser 300", "Land Cruiser 70", "Wildlander", "Yaris Cross", "Frontlander"],
@@ -198,13 +214,28 @@ const parseVehicleModelsData = (): VehicleModelsData => {
       "Volkswagen": ["Kübelwagen", "Schwimmwagen", "Thing", "Thing Type 181"]
     },
     "ATVs": {
-      "Honda": ["FourTrax series"]
+      "Honda": ["FourTrax Foreman", "FourTrax Rancher", "FourTrax Recon", "FourTrax Rincon", "TRX250X", "TRX90X", "Sportrax 400EX"],
+      "Yamaha": ["Grizzly 700", "Grizzly 90", "Kodiak 700", "Kodiak 450", "Raptor 700R", "Raptor 110", "YFZ450R", "Wolverine RMAX"],
+      "Polaris": ["Sportsman 570", "Sportsman 850", "Sportsman 1000", "Sportsman XP 1000", "Sportsman 450", "Outlaw 70", "Outlaw 110", "Scrambler XP 1000", "Phoenix 200"],
+      "Can-Am": ["Outlander 570", "Outlander 650", "Outlander 850", "Outlander 1000R", "Outlander MAX", "Renegade 570", "Renegade 850", "Renegade 1000R", "DS 90", "DS 250"],
+      "Kawasaki": ["Brute Force 300", "Brute Force 750", "KFX 50", "KFX 90", "KFX 450R"],
+      "Suzuki": ["KingQuad 400", "KingQuad 500", "KingQuad 750", "QuadSport Z90", "QuadSport Z400"],
+      "Arctic Cat": ["Alterra 300", "Alterra 450", "Alterra 570", "Alterra 600", "Alterra 700", "Wildcat 1000"],
+      "CF Moto": ["CForce 400", "CForce 500", "CForce 600", "CForce 800", "CForce 1000"]
     },
     "Side-by-Sides": {
-      "Honda": ["Pioneer", "Talon"]
+      "Honda": ["Pioneer 500", "Pioneer 700", "Pioneer 1000", "Talon 1000R", "Talon 1000X"],
+      "Polaris": ["RZR 200", "RZR Trail", "RZR Trail S", "RZR XP 1000", "RZR Pro XP", "RZR Turbo R", "RZR Pro R", "Ranger 500", "Ranger 570", "Ranger 1000", "Ranger XP 1000", "Ranger Crew", "General 1000", "General XP 1000"],
+      "Can-Am": ["Maverick Sport", "Maverick Trail", "Maverick X3", "Maverick R", "Commander 700", "Commander 1000", "Defender", "Defender MAX"],
+      "Yamaha": ["Wolverine X2", "Wolverine X4", "Wolverine RMAX2", "Wolverine RMAX4", "YXZ1000R", "Viking", "Viking VI"],
+      "Kawasaki": ["Teryx 800", "Teryx KRX 1000", "Teryx S", "Mule 4010", "Mule Pro-FX", "Mule Pro-MX", "Mule SX"],
+      "Arctic Cat": ["Prowler Pro", "Prowler 500", "Wildcat XX", "Havoc X"],
+      "CF Moto": ["ZForce 500", "ZForce 800", "ZForce 950", "ZForce 1000", "UForce 600", "UForce 800", "UForce 1000"]
     },
     "Taxis": {
-      "Austin": ["London Taxicab", "London Taxicab FX3", "London Taxicab FX4"]
+      "Austin": ["London Taxicab", "London Taxicab FX3", "London Taxicab FX4"],
+      "LEVC": ["TX", "TX5", "VN5"],
+      "Toyota": ["JPN Taxi", "Comfort", "Crown Comfort"]
     },
     "Spare Parts": {
       "Japanese Brands": ["Toyota", "Nissan", "Honda", "Mitsubishi", "Suzuki", "Mazda", "Isuzu", "Daihatsu", "Subaru", "Yamaha", "Acura", "Infiniti", "Lexus", "Mitsubishi Fuso", "UD Trucks", "Hino"],
