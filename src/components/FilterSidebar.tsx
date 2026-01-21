@@ -42,6 +42,18 @@ const FilterSidebar = ({ category, onSearch }: FilterSidebarProps) => {
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedMake, setSelectedMake] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState<string>("");
+
+  // Clear model when make changes (since models are make-specific)
+  const handleMakeChange = (newMake: string) => {
+    setSelectedMake(newMake);
+    setSelectedModel(""); // Clear model when make changes
+  };
+
+  // Clear model when type changes (since models are category-specific)
+  const handleTypeChange = (newType: string) => {
+    setSelectedType(newType);
+    setSelectedModel(""); // Clear model when type changes
+  };
   const [selectedCondition, setSelectedCondition] = useState<string>("");
   const [selectedPriceRange, setSelectedPriceRange] = useState<string>("");
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
@@ -133,7 +145,7 @@ const FilterSidebar = ({ category, onSearch }: FilterSidebarProps) => {
             {/* Make */}
             <div className="space-y-1">
               <Label className="text-xs font-medium">Make</Label>
-              <Select value={selectedMake} onValueChange={setSelectedMake}>
+              <Select value={selectedMake} onValueChange={handleMakeChange}>
                 <SelectTrigger className="h-9 text-sm">
                   <SelectValue placeholder="Make" />
                 </SelectTrigger>
@@ -151,7 +163,7 @@ const FilterSidebar = ({ category, onSearch }: FilterSidebarProps) => {
             {!category && (
               <div className="space-y-1">
                 <Label className="text-xs font-medium">Type</Label>
-                <Select value={selectedType} onValueChange={setSelectedType}>
+                <Select value={selectedType} onValueChange={handleTypeChange}>
                   <SelectTrigger className="h-9 text-sm">
                     <SelectValue placeholder="Type" />
                   </SelectTrigger>
@@ -326,7 +338,7 @@ const FilterSidebar = ({ category, onSearch }: FilterSidebarProps) => {
           {/* Make */}
           <div className="space-y-2">
             <Label className="text-sm font-medium">Make</Label>
-            <Select value={selectedMake} onValueChange={setSelectedMake}>
+            <Select value={selectedMake} onValueChange={handleMakeChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Select make" />
               </SelectTrigger>
@@ -344,7 +356,7 @@ const FilterSidebar = ({ category, onSearch }: FilterSidebarProps) => {
           {!category && (
             <div className="space-y-2">
               <Label className="text-sm font-medium">Type</Label>
-              <Select value={selectedType} onValueChange={setSelectedType}>
+              <Select value={selectedType} onValueChange={handleTypeChange}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
