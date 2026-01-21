@@ -41,7 +41,7 @@ const parseVehicleModelsData = (): VehicleModelsData => {
       "Junpai": ["A50", "A70"],
       "Xiali": [],
       "Dongfeng": ["CA71"],
-      "BYD": ["Seal", "Dolphin", "Atto 3", "Han", "Tang", "Qin Plus", "Song Plus", "Seagull", "Sea Lion 07", "Denza N7"],
+      "BYD": ["Seal", "Seal U", "Dolphin", "Atto 3", "Han", "Han EV", "Tang", "Tang EV", "Qin", "Qin Plus", "Qin Pro", "Song", "Song Plus", "Song Pro", "Song L", "Song Max", "Yuan", "Yuan Plus", "Yuan Pro", "Seagull", "Sea Lion 06", "Sea Lion 07", "Shark", "Destroyer 05", "Frigate 07", "Corvette 07", "Denza D9", "Denza N7", "Denza N8", "Yangwang U8", "Yangwang U9", "Sealion 6", "Sealion 7", "e2", "e6", "F3", "BYD Blade"],
       "NIO": ["ET5", "ET7", "ES6", "ES8", "EC6", "EC7", "EL6", "EL7", "EL8"],
       "XPeng": ["P5", "P7", "P7+", "G3", "G6", "G9", "X9", "Mona M03"],
       "Li Auto": ["L6", "L7", "L8", "L9", "Mega"],
