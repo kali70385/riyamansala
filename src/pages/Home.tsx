@@ -76,6 +76,9 @@ const Home = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" className="bg-background border-b border-border" />
+
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
         <div className="container mx-auto px-4">
