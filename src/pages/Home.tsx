@@ -3,8 +3,9 @@ import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import FilterSidebar, { FilterValues } from "@/components/FilterSidebar";
 import VehicleCard from "@/components/VehicleCard";
+import AdSpace from "@/components/AdSpace";
 import { mockVehicles, priceRanges, Vehicle } from "@/data/mockData";
-import { useState, useMemo } from "react";
+import { useState, useMemo, Fragment } from "react";
 
 const Home = () => {
   const [filters, setFilters] = useState<FilterValues | null>(null);
@@ -75,6 +76,9 @@ const Home = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" className="bg-background border-b border-border" />
+
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
         <div className="container mx-auto px-4">
@@ -114,8 +118,16 @@ const Home = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {filteredVehicles.map((vehicle, index) => (
+                  <Fragment key={vehicle.id}>
+                    <VehicleCard vehicle={vehicle} />
+                    {/* Insert ad after every 4 cards */}
+                    {(index + 1) % 4 === 0 && index < filteredVehicles.length - 1 && (
+                      <div className="col-span-1 md:col-span-2 xl:col-span-3">
+                        <AdSpace variant="inline" />
+                      </div>
+                    )}
+                  </Fragment>
                 ))}
               </div>
             )}
