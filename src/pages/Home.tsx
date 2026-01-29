@@ -3,8 +3,9 @@ import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import FilterSidebar, { FilterValues } from "@/components/FilterSidebar";
 import VehicleCard from "@/components/VehicleCard";
+import AdSpace from "@/components/AdSpace";
 import { mockVehicles, priceRanges, Vehicle } from "@/data/mockData";
-import { useState, useMemo } from "react";
+import { useState, useMemo, Fragment } from "react";
 
 const Home = () => {
   const [filters, setFilters] = useState<FilterValues | null>(null);
