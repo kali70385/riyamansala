@@ -118,8 +118,16 @@ const Home = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {filteredVehicles.map((vehicle, index) => (
+                  <Fragment key={vehicle.id}>
+                    <VehicleCard vehicle={vehicle} />
+                    {/* Insert ad after every 4 cards */}
+                    {(index + 1) % 4 === 0 && index < filteredVehicles.length - 1 && (
+                      <div className="col-span-1 md:col-span-2 xl:col-span-3">
+                        <AdSpace variant="inline" />
+                      </div>
+                    )}
+                  </Fragment>
                 ))}
               </div>
             )}
