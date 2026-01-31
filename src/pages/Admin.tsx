@@ -10,9 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield } from "lucide-react";
+import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -51,6 +54,17 @@ interface UserRole {
   user_id: string;
   role: 'admin' | 'moderator' | 'user';
   created_at: string;
+}
+
+interface AdSettings {
+  metaTags: string;
+  leaderboardAdCode: string;
+  inlineAdCodes: string[];
+  detailPageAdCodes: {
+    afterImage: string;
+    afterDetails: string;
+    aboveFooter: string;
+  };
 }
 
 const Admin = () => {
