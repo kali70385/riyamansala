@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -259,6 +260,9 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
       
       <main className="flex-1 container mx-auto px-4 py-6">

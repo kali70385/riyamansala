@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { mockVehicles } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -48,6 +49,9 @@ const VehicleDetail = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
 
       <div className="container mx-auto px-4 py-8">
@@ -93,6 +97,9 @@ const VehicleDetail = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Ad Space - Between Image and Details */}
+            <AdSpace variant="inline" />
 
             {/* Vehicle Details */}
             <Card>
@@ -149,6 +156,11 @@ const VehicleDetail = () => {
 
           {/* Right Column - Price and Contact */}
           <div className="space-y-6">
+            {/* Ad Space - Between Details and Price (Mobile only, shows on lg:hidden) */}
+            <div className="lg:hidden">
+              <AdSpace variant="inline" />
+            </div>
+            
             {/* Price Card */}
             <Card>
               <CardContent className="p-6">
@@ -258,6 +270,9 @@ const VehicleDetail = () => {
           </div>
         </div>
       </div>
+      
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" className="mt-8" />
       
       <Footer />
     </div>
