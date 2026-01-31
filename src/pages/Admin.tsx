@@ -676,6 +676,164 @@ const Admin = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Ads Management Tab */}
+          <TabsContent value="ads">
+            <div className="space-y-6">
+              {/* Meta Tags Configuration */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Tag className="w-5 h-5" />
+                    Ad Network Meta Tags
+                  </CardTitle>
+                  <CardDescription>
+                    Add meta tags for ad network verification (Google AdSense, etc.)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <Label htmlFor="metaTags">Meta Tags (paste in &lt;head&gt; section)</Label>
+                    <Textarea
+                      id="metaTags"
+                      placeholder='<meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX">'
+                      value={adSettings.metaTags}
+                      onChange={(e) => setAdSettings(prev => ({ ...prev, metaTags: e.target.value }))}
+                      className="font-mono text-sm min-h-[100px]"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Add your ad network verification meta tags here. They will be injected into the page head.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Leaderboard Ad Code */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Code className="w-5 h-5" />
+                    Leaderboard Ad Code
+                  </CardTitle>
+                  <CardDescription>
+                    Ad code for top leaderboard ads (320x50 mobile / 728x90 desktop)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <Label htmlFor="leaderboardAd">Leaderboard Ad Script</Label>
+                    <Textarea
+                      id="leaderboardAd"
+                      placeholder='<script async src="https://pagead2.googlesyndication.com/..."></script>
+<ins class="adsbygoogle" data-ad-client="..." data-ad-slot="..."></ins>'
+                      value={adSettings.leaderboardAdCode}
+                      onChange={(e) => setAdSettings(prev => ({ ...prev, leaderboardAdCode: e.target.value }))}
+                      className="font-mono text-sm min-h-[120px]"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Inline/Rotating Ad Codes */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Megaphone className="w-5 h-5" />
+                    Listing Page Inline Ads (Rotating)
+                  </CardTitle>
+                  <CardDescription>
+                    6 ad codes that rotate between vehicle listing cards (300x250 medium rectangle)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {adSettings.inlineAdCodes.map((code, index) => (
+                      <div key={index} className="space-y-2">
+                        <Label htmlFor={`inlineAd${index + 1}`}>
+                          Ad Slot {index + 1}
+                        </Label>
+                        <Textarea
+                          id={`inlineAd${index + 1}`}
+                          placeholder={`<ins class="adsbygoogle" data-ad-slot="slot-${index + 1}"></ins>`}
+                          value={code}
+                          onChange={(e) => updateInlineAdCode(index, e.target.value)}
+                          className="font-mono text-xs min-h-[80px]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">
+                    These ads will rotate in sequence after every 4 vehicle cards on listing pages.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Vehicle Detail Page Ads */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Car className="w-5 h-5" />
+                    Vehicle Detail Page Ads
+                  </CardTitle>
+                  <CardDescription>
+                    Ad codes for specific positions on vehicle detail pages
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="afterImageAd">After Image Section</Label>
+                      <Textarea
+                        id="afterImageAd"
+                        placeholder="Ad code to display between image gallery and vehicle details..."
+                        value={adSettings.detailPageAdCodes.afterImage}
+                        onChange={(e) => updateDetailPageAdCode('afterImage', e.target.value)}
+                        className="font-mono text-sm min-h-[80px]"
+                      />
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-2">
+                      <Label htmlFor="afterDetailsAd">After Details Section</Label>
+                      <Textarea
+                        id="afterDetailsAd"
+                        placeholder="Ad code to display between vehicle details and price section..."
+                        value={adSettings.detailPageAdCodes.afterDetails}
+                        onChange={(e) => updateDetailPageAdCode('afterDetails', e.target.value)}
+                        className="font-mono text-sm min-h-[80px]"
+                      />
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-2">
+                      <Label htmlFor="aboveFooterAd">Above Footer</Label>
+                      <Textarea
+                        id="aboveFooterAd"
+                        placeholder="Ad code to display just above the footer section..."
+                        value={adSettings.detailPageAdCodes.aboveFooter}
+                        onChange={(e) => updateDetailPageAdCode('aboveFooter', e.target.value)}
+                        className="font-mono text-sm min-h-[80px]"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Save Button */}
+              <div className="flex justify-end">
+                <Button onClick={saveAdSettings} disabled={savingAds} size="lg">
+                  {savingAds ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4 mr-2" />
+                  )}
+                  Save Ad Settings
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
         </Tabs>
       </main>
 
