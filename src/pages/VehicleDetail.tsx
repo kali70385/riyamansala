@@ -156,6 +156,11 @@ const VehicleDetail = () => {
 
           {/* Right Column - Price and Contact */}
           <div className="space-y-6">
+            {/* Ad Space - Between Details and Price (Mobile only, shows on lg:hidden) */}
+            <div className="lg:hidden">
+              <AdSpace variant="inline" />
+            </div>
+            
             {/* Price Card */}
             <Card>
               <CardContent className="p-6">
