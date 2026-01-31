@@ -82,6 +82,60 @@ const Admin = () => {
     totalUsers: 0,
     totalAdmins: 0,
   });
+  
+  // Ad Management State
+  const [adSettings, setAdSettings] = useState<AdSettings>({
+    metaTags: '',
+    leaderboardAdCode: '',
+    inlineAdCodes: ['', '', '', '', '', ''],
+    detailPageAdCodes: {
+      afterImage: '',
+      afterDetails: '',
+      aboveFooter: '',
+    },
+  });
+  const [savingAds, setSavingAds] = useState(false);
+
+  // Load ad settings from localStorage on mount
+  useEffect(() => {
+    const savedAdSettings = localStorage.getItem('adSettings');
+    if (savedAdSettings) {
+      try {
+        setAdSettings(JSON.parse(savedAdSettings));
+      } catch (e) {
+        console.error('Failed to parse ad settings:', e);
+      }
+    }
+  }, []);
+
+  const saveAdSettings = () => {
+    setSavingAds(true);
+    try {
+      localStorage.setItem('adSettings', JSON.stringify(adSettings));
+      toast.success('Ad settings saved successfully!');
+    } catch (e) {
+      toast.error('Failed to save ad settings');
+    } finally {
+      setSavingAds(false);
+    }
+  };
+
+  const updateInlineAdCode = (index: number, value: string) => {
+    setAdSettings(prev => ({
+      ...prev,
+      inlineAdCodes: prev.inlineAdCodes.map((code, i) => i === index ? value : code),
+    }));
+  };
+
+  const updateDetailPageAdCode = (field: keyof AdSettings['detailPageAdCodes'], value: string) => {
+    setAdSettings(prev => ({
+      ...prev,
+      detailPageAdCodes: {
+        ...prev.detailPageAdCodes,
+        [field]: value,
+      },
+    }));
+  };
 
   useEffect(() => {
     checkAdminAccess();
