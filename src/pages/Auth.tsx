@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, X } from "lucide-react";
 
