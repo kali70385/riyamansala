@@ -205,6 +205,9 @@ const SellerProfile = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
 
       {/* Seller Header */}
