@@ -98,6 +98,9 @@ const VehicleDetail = () => {
               </CardContent>
             </Card>
 
+            {/* Ad Space - Between Image and Details */}
+            <AdSpace variant="inline" />
+
             {/* Vehicle Details */}
             <Card>
               <CardContent className="p-6">
