@@ -49,6 +49,9 @@ const VehicleDetail = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
 
       <div className="container mx-auto px-4 py-8">
