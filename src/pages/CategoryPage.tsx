@@ -1,7 +1,8 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Fragment } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import FilterSidebar, { FilterValues } from "@/components/FilterSidebar";
 import VehicleCard from "@/components/VehicleCard";
 import { mockVehicles, priceRanges } from "@/data/mockData";
