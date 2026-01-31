@@ -260,6 +260,9 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
       
       <main className="flex-1 container mx-auto px-4 py-6">

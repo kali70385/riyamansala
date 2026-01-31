@@ -172,6 +172,9 @@ const CategoryPage = () => {
         </div>
       </div>
       
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" />
+      
       <Footer />
     </div>
   );

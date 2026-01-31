@@ -142,6 +142,9 @@ const Contact = () => {
         </section>
       </main>
 
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" />
+      
       <Footer />
     </div>
   );
