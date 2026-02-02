@@ -12,6 +12,11 @@ import { resetInlineAdCounter } from "@/hooks/useAdSettings";
 const Home = () => {
   const [filters, setFilters] = useState<FilterValues | null>(null);
 
+  // Reset inline ad counter on mount
+  useEffect(() => {
+    resetInlineAdCounter();
+  }, []);
+
   const filteredVehicles = useMemo(() => {
     if (!filters) return mockVehicles;
 

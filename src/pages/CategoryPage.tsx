@@ -16,8 +16,9 @@ const CategoryPage = () => {
   const listingsRef = useRef<HTMLDivElement>(null);
   const [appliedFilters, setAppliedFilters] = useState<FilterValues | null>(null);
 
-  // Scroll to listings when category changes
+  // Scroll to listings when category changes and reset ad counter
   useEffect(() => {
+    resetInlineAdCounter();
     if (listingsRef.current) {
       listingsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
