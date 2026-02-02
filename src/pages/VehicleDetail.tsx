@@ -99,7 +99,7 @@ const VehicleDetail = () => {
             </Card>
 
             {/* Ad Space - Between Image and Details */}
-            <AdSpace variant="inline" />
+            <AdSpace variant="inline" placement="afterImage" />
 
             {/* Vehicle Details */}
             <Card>
@@ -158,7 +158,7 @@ const VehicleDetail = () => {
           <div className="space-y-6">
             {/* Ad Space - Between Details and Price (Mobile only, shows on lg:hidden) */}
             <div className="lg:hidden">
-              <AdSpace variant="inline" />
+              <AdSpace variant="inline" placement="afterDetails" />
             </div>
             
             {/* Price Card */}
@@ -272,7 +272,7 @@ const VehicleDetail = () => {
       </div>
       
       {/* Ad Space - Above Footer */}
-      <AdSpace variant="leaderboard" className="mt-8" />
+      <AdSpace variant="inline" placement="aboveFooter" className="mt-8" />
       
       <Footer />
     </div>

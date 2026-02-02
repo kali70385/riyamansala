@@ -8,6 +8,7 @@ import VehicleCard from "@/components/VehicleCard";
 import { mockVehicles, priceRanges } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { resetInlineAdCounter } from "@/hooks/useAdSettings";
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -15,8 +16,9 @@ const CategoryPage = () => {
   const listingsRef = useRef<HTMLDivElement>(null);
   const [appliedFilters, setAppliedFilters] = useState<FilterValues | null>(null);
 
-  // Scroll to listings when category changes
+  // Scroll to listings when category changes and reset ad counter
   useEffect(() => {
+    resetInlineAdCounter();
     if (listingsRef.current) {
       listingsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
