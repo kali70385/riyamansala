@@ -272,7 +272,7 @@ const VehicleDetail = () => {
       </div>
       
       {/* Ad Space - Above Footer */}
-      <AdSpace variant="leaderboard" className="mt-8" />
+      <AdSpace variant="inline" placement="aboveFooter" className="mt-8" />
       
       <Footer />
     </div>
