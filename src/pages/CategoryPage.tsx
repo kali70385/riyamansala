@@ -8,6 +8,7 @@ import VehicleCard from "@/components/VehicleCard";
 import { mockVehicles, priceRanges } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { resetInlineAdCounter } from "@/hooks/useAdSettings";
 
 const CategoryPage = () => {
   const { category } = useParams();
