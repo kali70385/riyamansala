@@ -99,7 +99,7 @@ const VehicleDetail = () => {
             </Card>
 
             {/* Ad Space - Between Image and Details */}
-            <AdSpace variant="inline" />
+            <AdSpace variant="inline" placement="afterImage" />
 
             {/* Vehicle Details */}
             <Card>
