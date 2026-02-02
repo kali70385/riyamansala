@@ -16,6 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag } from "lucide-react";
+import { AdSettings } from "@/hooks/useAdSettings";
 import {
   AlertDialog,
   AlertDialogAction,
