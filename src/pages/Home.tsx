@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
@@ -6,6 +7,7 @@ import VehicleCard from "@/components/VehicleCard";
 import AdSpace from "@/components/AdSpace";
 import { mockVehicles, priceRanges, Vehicle } from "@/data/mockData";
 import { useState, useMemo, Fragment } from "react";
+import { resetInlineAdCounter } from "@/hooks/useAdSettings";
 
 const Home = () => {
   const [filters, setFilters] = useState<FilterValues | null>(null);
