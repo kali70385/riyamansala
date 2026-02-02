@@ -57,16 +57,6 @@ interface UserRole {
   created_at: string;
 }
 
-interface AdSettings {
-  metaTags: string;
-  leaderboardAdCode: string;
-  inlineAdCodes: string[];
-  detailPageAdCodes: {
-    afterImage: string;
-    afterDetails: string;
-    aboveFooter: string;
-  };
-}
 
 const Admin = () => {
   const navigate = useNavigate();
