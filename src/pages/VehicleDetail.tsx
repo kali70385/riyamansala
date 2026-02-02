@@ -158,7 +158,7 @@ const VehicleDetail = () => {
           <div className="space-y-6">
             {/* Ad Space - Between Details and Price (Mobile only, shows on lg:hidden) */}
             <div className="lg:hidden">
-              <AdSpace variant="inline" />
+              <AdSpace variant="inline" placement="afterDetails" />
             </div>
             
             {/* Price Card */}
