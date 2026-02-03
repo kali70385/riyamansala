@@ -63,6 +63,11 @@ const ModelAutocomplete = ({
     "Heavy-Duty": "Heavy-Duty",
     "Motorcycle": "Motorbikes",
     "Bus": "Vans",
+    "ATV": "ATVs",
+    "Side-by-Side": "Side-by-Sides",
+    "Taxi": "Taxis",
+    "Military": "Military",
+    "Spare Parts": "Spare Parts",
   };
 
   // Get available models based on selected category, type, and make
