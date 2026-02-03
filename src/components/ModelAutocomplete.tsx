@@ -45,6 +45,10 @@ const ModelAutocomplete = ({
     "lorries": "Lorries",
     "heavy-duty": "Heavy-Duty",
     "spare-parts": "Spare Parts",
+    "atvs": "ATVs",
+    "side-by-sides": "Side-by-Sides",
+    "taxis": "Taxis",
+    "military": "Military",
   };
 
   // Map type to vehicleModels key
