@@ -385,7 +385,7 @@ const Admin = () => {
 
         {/* Tabs for different sections */}
         <Tabs defaultValue="listings" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex">
+          <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-flex">
             <TabsTrigger value="listings" className="flex items-center gap-2">
               <Car className="w-4 h-4" />
               <span className="hidden sm:inline">Listings</span>
@@ -397,6 +397,10 @@ const Admin = () => {
             <TabsTrigger value="roles" className="flex items-center gap-2">
               <Shield className="w-4 h-4" />
               <span className="hidden sm:inline">Roles</span>
+            </TabsTrigger>
+            <TabsTrigger value="makes" className="flex items-center gap-2">
+              <Factory className="w-4 h-4" />
+              <span className="hidden sm:inline">Makes</span>
             </TabsTrigger>
             <TabsTrigger value="models" className="flex items-center gap-2">
               <Wrench className="w-4 h-4" />
