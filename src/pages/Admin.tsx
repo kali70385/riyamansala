@@ -15,9 +15,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag, Wrench } from "lucide-react";
+import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag, Wrench, Factory } from "lucide-react";
 import { AdSettings } from "@/hooks/useAdSettings";
 import ModelsManagement from "@/components/admin/ModelsManagement";
+import MakesManagement from "@/components/admin/MakesManagement";
 import {
   AlertDialog,
   AlertDialogAction,
