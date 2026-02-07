@@ -166,6 +166,30 @@ export type Database = {
         }
         Relationships: []
       }
+      vehicle_makes: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          make: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          make: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          make?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       vehicle_models: {
         Row: {
           category: string
