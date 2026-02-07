@@ -673,6 +673,11 @@ const Admin = () => {
             </Card>
           </TabsContent>
 
+          {/* Models Management Tab */}
+          <TabsContent value="models">
+            <ModelsManagement />
+          </TabsContent>
+
           {/* Ads Management Tab */}
           <TabsContent value="ads">
             <div className="space-y-6">
