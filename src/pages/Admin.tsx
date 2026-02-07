@@ -15,9 +15,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag, Wrench } from "lucide-react";
+import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag, Wrench, Factory } from "lucide-react";
 import { AdSettings } from "@/hooks/useAdSettings";
 import ModelsManagement from "@/components/admin/ModelsManagement";
+import MakesManagement from "@/components/admin/MakesManagement";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -384,7 +385,7 @@ const Admin = () => {
 
         {/* Tabs for different sections */}
         <Tabs defaultValue="listings" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex">
+          <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-flex">
             <TabsTrigger value="listings" className="flex items-center gap-2">
               <Car className="w-4 h-4" />
               <span className="hidden sm:inline">Listings</span>
@@ -396,6 +397,10 @@ const Admin = () => {
             <TabsTrigger value="roles" className="flex items-center gap-2">
               <Shield className="w-4 h-4" />
               <span className="hidden sm:inline">Roles</span>
+            </TabsTrigger>
+            <TabsTrigger value="makes" className="flex items-center gap-2">
+              <Factory className="w-4 h-4" />
+              <span className="hidden sm:inline">Makes</span>
             </TabsTrigger>
             <TabsTrigger value="models" className="flex items-center gap-2">
               <Wrench className="w-4 h-4" />
@@ -671,6 +676,11 @@ const Admin = () => {
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Makes Management Tab */}
+          <TabsContent value="makes">
+            <MakesManagement />
           </TabsContent>
 
           {/* Models Management Tab */}
