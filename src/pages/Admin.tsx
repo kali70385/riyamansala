@@ -3,15 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield } from "lucide-react";
+import { Loader2, Search, Trash2, Eye, Ban, CheckCircle, Users, Car, BarChart3, Shield, Megaphone, Save, Code, Tag, Wrench } from "lucide-react";
+import { AdSettings } from "@/hooks/useAdSettings";
+import ModelsManagement from "@/components/admin/ModelsManagement";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -52,6 +58,7 @@ interface UserRole {
   created_at: string;
 }
 
+
 const Admin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -67,6 +74,60 @@ const Admin = () => {
     totalUsers: 0,
     totalAdmins: 0,
   });
+  
+  // Ad Management State
+  const [adSettings, setAdSettings] = useState<AdSettings>({
+    metaTags: '',
+    leaderboardAdCode: '',
+    inlineAdCodes: ['', '', '', '', '', ''],
+    detailPageAdCodes: {
+      afterImage: '',
+      afterDetails: '',
+      aboveFooter: '',
+    },
+  });
+  const [savingAds, setSavingAds] = useState(false);
+
+  // Load ad settings from localStorage on mount
+  useEffect(() => {
+    const savedAdSettings = localStorage.getItem('adSettings');
+    if (savedAdSettings) {
+      try {
+        setAdSettings(JSON.parse(savedAdSettings));
+      } catch (e) {
+        console.error('Failed to parse ad settings:', e);
+      }
+    }
+  }, []);
+
+  const saveAdSettings = () => {
+    setSavingAds(true);
+    try {
+      localStorage.setItem('adSettings', JSON.stringify(adSettings));
+      toast.success('Ad settings saved successfully!');
+    } catch (e) {
+      toast.error('Failed to save ad settings');
+    } finally {
+      setSavingAds(false);
+    }
+  };
+
+  const updateInlineAdCode = (index: number, value: string) => {
+    setAdSettings(prev => ({
+      ...prev,
+      inlineAdCodes: prev.inlineAdCodes.map((code, i) => i === index ? value : code),
+    }));
+  };
+
+  const updateDetailPageAdCode = (field: keyof AdSettings['detailPageAdCodes'], value: string) => {
+    setAdSettings(prev => ({
+      ...prev,
+      detailPageAdCodes: {
+        ...prev.detailPageAdCodes,
+        [field]: value,
+      },
+    }));
+  };
 
   useEffect(() => {
     checkAdminAccess();
@@ -259,6 +320,9 @@ const Admin = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
       
       <main className="flex-1 container mx-auto px-4 py-6">
@@ -320,7 +384,7 @@ const Admin = () => {
 
         {/* Tabs for different sections */}
         <Tabs defaultValue="listings" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
+          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex">
             <TabsTrigger value="listings" className="flex items-center gap-2">
               <Car className="w-4 h-4" />
               <span className="hidden sm:inline">Listings</span>
@@ -332,6 +396,14 @@ const Admin = () => {
             <TabsTrigger value="roles" className="flex items-center gap-2">
               <Shield className="w-4 h-4" />
               <span className="hidden sm:inline">Roles</span>
+            </TabsTrigger>
+            <TabsTrigger value="models" className="flex items-center gap-2">
+              <Wrench className="w-4 h-4" />
+              <span className="hidden sm:inline">Models</span>
+            </TabsTrigger>
+            <TabsTrigger value="ads" className="flex items-center gap-2">
+              <Megaphone className="w-4 h-4" />
+              <span className="hidden sm:inline">Ads</span>
             </TabsTrigger>
           </TabsList>
 
@@ -599,6 +671,169 @@ const Admin = () => {
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Models Management Tab */}
+          <TabsContent value="models">
+            <ModelsManagement />
+          </TabsContent>
+
+          {/* Ads Management Tab */}
+          <TabsContent value="ads">
+            <div className="space-y-6">
+              {/* Meta Tags Configuration */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Tag className="w-5 h-5" />
+                    Ad Network Meta Tags
+                  </CardTitle>
+                  <CardDescription>
+                    Add meta tags for ad network verification (Google AdSense, etc.)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <Label htmlFor="metaTags">Meta Tags (paste in &lt;head&gt; section)</Label>
+                    <Textarea
+                      id="metaTags"
+                      placeholder='<meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX">'
+                      value={adSettings.metaTags}
+                      onChange={(e) => setAdSettings(prev => ({ ...prev, metaTags: e.target.value }))}
+                      className="font-mono text-sm min-h-[100px]"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Add your ad network verification meta tags here. They will be injected into the page head.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Leaderboard Ad Code */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Code className="w-5 h-5" />
+                    Leaderboard Ad Code
+                  </CardTitle>
+                  <CardDescription>
+                    Ad code for top leaderboard ads (320x50 mobile / 728x90 desktop)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <Label htmlFor="leaderboardAd">Leaderboard Ad Script</Label>
+                    <Textarea
+                      id="leaderboardAd"
+                      placeholder='<script async src="https://pagead2.googlesyndication.com/..."></script>
+<ins class="adsbygoogle" data-ad-client="..." data-ad-slot="..."></ins>'
+                      value={adSettings.leaderboardAdCode}
+                      onChange={(e) => setAdSettings(prev => ({ ...prev, leaderboardAdCode: e.target.value }))}
+                      className="font-mono text-sm min-h-[120px]"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Inline/Rotating Ad Codes */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Megaphone className="w-5 h-5" />
+                    Listing Page Inline Ads (Rotating)
+                  </CardTitle>
+                  <CardDescription>
+                    6 ad codes that rotate between vehicle listing cards (300x250 medium rectangle)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {adSettings.inlineAdCodes.map((code, index) => (
+                      <div key={index} className="space-y-2">
+                        <Label htmlFor={`inlineAd${index + 1}`}>
+                          Ad Slot {index + 1}
+                        </Label>
+                        <Textarea
+                          id={`inlineAd${index + 1}`}
+                          placeholder={`<ins class="adsbygoogle" data-ad-slot="slot-${index + 1}"></ins>`}
+                          value={code}
+                          onChange={(e) => updateInlineAdCode(index, e.target.value)}
+                          className="font-mono text-xs min-h-[80px]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">
+                    These ads will rotate in sequence after every 4 vehicle cards on listing pages.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Vehicle Detail Page Ads */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Car className="w-5 h-5" />
+                    Vehicle Detail Page Ads
+                  </CardTitle>
+                  <CardDescription>
+                    Ad codes for specific positions on vehicle detail pages
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="afterImageAd">After Image Section</Label>
+                      <Textarea
+                        id="afterImageAd"
+                        placeholder="Ad code to display between image gallery and vehicle details..."
+                        value={adSettings.detailPageAdCodes.afterImage}
+                        onChange={(e) => updateDetailPageAdCode('afterImage', e.target.value)}
+                        className="font-mono text-sm min-h-[80px]"
+                      />
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-2">
+                      <Label htmlFor="afterDetailsAd">After Details Section</Label>
+                      <Textarea
+                        id="afterDetailsAd"
+                        placeholder="Ad code to display between vehicle details and price section..."
+                        value={adSettings.detailPageAdCodes.afterDetails}
+                        onChange={(e) => updateDetailPageAdCode('afterDetails', e.target.value)}
+                        className="font-mono text-sm min-h-[80px]"
+                      />
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-2">
+                      <Label htmlFor="aboveFooterAd">Above Footer</Label>
+                      <Textarea
+                        id="aboveFooterAd"
+                        placeholder="Ad code to display just above the footer section..."
+                        value={adSettings.detailPageAdCodes.aboveFooter}
+                        onChange={(e) => updateDetailPageAdCode('aboveFooter', e.target.value)}
+                        className="font-mono text-sm min-h-[80px]"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Save Button */}
+              <div className="flex justify-end">
+                <Button onClick={saveAdSettings} disabled={savingAds} size="lg">
+                  {savingAds ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4 mr-2" />
+                  )}
+                  Save Ad Settings
+                </Button>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </main>

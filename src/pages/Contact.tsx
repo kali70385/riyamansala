@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,9 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
       
       <main className="flex-1">
@@ -138,6 +142,9 @@ const Contact = () => {
         </section>
       </main>
 
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" />
+      
       <Footer />
     </div>
   );

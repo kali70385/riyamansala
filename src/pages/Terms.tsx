@@ -1,10 +1,14 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
       
       <main className="flex-1">
@@ -102,6 +106,9 @@ const Terms = () => {
         </section>
       </main>
 
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" />
+      
       <Footer />
     </div>
   );

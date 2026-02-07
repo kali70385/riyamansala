@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, X } from "lucide-react";
 
@@ -170,6 +171,9 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
       
       <main className="flex-1 container mx-auto px-4 py-16">
@@ -321,6 +325,9 @@ const Auth = () => {
         </Card>
       </main>
 
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" />
+      
       <Footer />
     </div>
   );

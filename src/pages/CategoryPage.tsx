@@ -1,12 +1,14 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Fragment } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AdSpace from "@/components/AdSpace";
 import FilterSidebar, { FilterValues } from "@/components/FilterSidebar";
 import VehicleCard from "@/components/VehicleCard";
 import { mockVehicles, priceRanges } from "@/data/mockData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { resetInlineAdCounter } from "@/hooks/useAdSettings";
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -14,8 +16,9 @@ const CategoryPage = () => {
   const listingsRef = useRef<HTMLDivElement>(null);
   const [appliedFilters, setAppliedFilters] = useState<FilterValues | null>(null);
 
-  // Scroll to listings when category changes
+  // Scroll to listings when category changes and reset ad counter
   useEffect(() => {
+    resetInlineAdCounter();
     if (listingsRef.current) {
       listingsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -108,6 +111,9 @@ const CategoryPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {/* Top Leaderboard Ad */}
+      <AdSpace variant="leaderboard" />
+      
       <Header />
 
       {/* Category Header */}
@@ -143,8 +149,16 @@ const CategoryPage = () => {
           <main className="flex-1">
             {filteredVehicles.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {filteredVehicles.map((vehicle, index) => (
+                  <Fragment key={vehicle.id}>
+                    <VehicleCard vehicle={vehicle} />
+                    {/* Insert ad after every 4 cards */}
+                    {(index + 1) % 4 === 0 && index < filteredVehicles.length - 1 && (
+                      <div className="col-span-1 md:col-span-2 xl:col-span-3">
+                        <AdSpace variant="inline" />
+                      </div>
+                    )}
+                  </Fragment>
                 ))}
               </div>
             ) : (
@@ -160,6 +174,9 @@ const CategoryPage = () => {
           </main>
         </div>
       </div>
+      
+      {/* Ad Space - Above Footer */}
+      <AdSpace variant="leaderboard" />
       
       <Footer />
     </div>

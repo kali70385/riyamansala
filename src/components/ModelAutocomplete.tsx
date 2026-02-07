@@ -45,6 +45,10 @@ const ModelAutocomplete = ({
     "lorries": "Lorries",
     "heavy-duty": "Heavy-Duty",
     "spare-parts": "Spare Parts",
+    "atvs": "ATVs",
+    "side-by-sides": "Side-by-Sides",
+    "taxis": "Taxis",
+    "military": "Military",
   };
 
   // Map type to vehicleModels key
@@ -59,6 +63,11 @@ const ModelAutocomplete = ({
     "Heavy-Duty": "Heavy-Duty",
     "Motorcycle": "Motorbikes",
     "Bus": "Vans",
+    "ATV": "ATVs",
+    "Side-by-Side": "Side-by-Sides",
+    "Taxi": "Taxis",
+    "Military": "Military",
+    "Spare Parts": "Spare Parts",
   };
 
   // Get available models based on selected category, type, and make
