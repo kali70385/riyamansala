@@ -678,6 +678,11 @@ const Admin = () => {
             </Card>
           </TabsContent>
 
+          {/* Makes Management Tab */}
+          <TabsContent value="makes">
+            <MakesManagement />
+          </TabsContent>
+
           {/* Models Management Tab */}
           <TabsContent value="models">
             <ModelsManagement />
